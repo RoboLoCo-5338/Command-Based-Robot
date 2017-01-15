@@ -43,8 +43,8 @@ public class DriveTrain extends Subsystem {
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double left, double right) {
-		DRIVE.arcadeDrive(left, right, true);
+	public void drive(double forward, double rotation) {
+		DRIVE.arcadeDrive(forward, rotation, true);
 	}
 
 	/**
@@ -53,6 +53,6 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(joy.getRawAxis(0), joy.getRawAxis(2), true);
+		DRIVE.arcadeDrive(-joy.getRawAxis(1), joy.getRawAxis(2), true);
 	}
 }
