@@ -2,32 +2,43 @@ package org.usfirst.frc.team5338.robot.commands;
 
 import org.usfirst.frc.team5338.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.command.TimedCommand;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class PowerSettingMin extends TimedCommand
+public class PowerSettingMin extends Command
 {
 
-    public PowerSettingMin()
-    {
-    	super(1);
+    public PowerSettingMin() {
     	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize()
     {
-    	Robot.drivetrain.DRIVE.setMaxOutput(0.5);
-    	Robot.oi.getJoystick().setRumble(RumbleType.kRightRumble, 1);
+    	Robot.drivetrain.DRIVE.setMaxOutput(0.4);
     }
 
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() 
+    {	
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() 
+    {
+        return true;
+    }
 
     // Called once after isFinished returns true
     protected void end()
     {
-    	Robot.oi.getJoystick().setRumble(RumbleType.kRightRumble, 0);
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted()
+    {
     }
 }
