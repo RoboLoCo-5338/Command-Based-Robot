@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import org.usfirst.frc.team5338.robot.commands.ArcadeDriveWithJoystick;
 import org.usfirst.frc.team5338.robot.commands.DriveGroup;
 
 import com.ctre.CANTalon;
@@ -32,7 +33,7 @@ public class DriveTrain extends Subsystem {
 	 */
 	@Override
 	public void initDefaultCommand() {
-		setDefaultCommand(new DriveGroup());
+		setDefaultCommand(new ArcadeDriveWithJoystick());
 	}
 
 	/**
