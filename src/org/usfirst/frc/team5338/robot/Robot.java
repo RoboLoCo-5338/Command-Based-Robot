@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
-import org.usfirst.frc.team5338.robot.commands.PowerSync;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
 /**
@@ -17,7 +16,6 @@ import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
  */
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
-	//Command PowerSync;
 
 	public static DriveTrain drivetrain;
 	public static OI oi;
@@ -34,7 +32,6 @@ public class Robot extends IterativeRobot {
 
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
-		//PowerSync = new PowerSync();
 	}
 
 	@Override
@@ -57,7 +54,6 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
-		//PowerSync.start();
 	}
 
 	/**

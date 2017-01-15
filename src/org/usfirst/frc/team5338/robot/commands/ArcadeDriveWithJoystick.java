@@ -11,9 +11,10 @@ import org.usfirst.frc.team5338.robot.Robot;
 /**
  * Have the robot drive tank style using the Xbox Joystick until interrupted.
  */
-public class TankDriveWithJoystick extends Command {
-
-	public TankDriveWithJoystick() {
+public class ArcadeDriveWithJoystick extends Command
+{
+	
+	public ArcadeDriveWithJoystick() {
 		requires(Robot.drivetrain);
 	}
 
@@ -21,9 +22,7 @@ public class TankDriveWithJoystick extends Command {
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.DRIVE.setMaxOutput((1 + Robot.oi.getJoystick().getRawAxis(3)) / 2);
-		Robot.drivetrain.drive(Robot.oi.getJoystick());
-		
+		Robot.drivetrain.drive(Robot.oi.getJoystick());	
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
