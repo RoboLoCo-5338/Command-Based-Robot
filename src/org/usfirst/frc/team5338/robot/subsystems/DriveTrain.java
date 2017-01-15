@@ -45,14 +45,15 @@ public class DriveTrain extends Subsystem {
 	 *            Speed in range [-1,1]
 	 */
 	public void drive(double left, double right) {
-		DRIVE.tankDrive(left, right, true);
+		DRIVE.arcadeDrive(left, right, true);
 	}
 
 	/**
 	 * @param joy
 	 *            The XBOX style joystick to use to drive tank style.
 	 */
-	public void drive(Joystick joy) {
-		DRIVE.tankDrive(joy.getRawAxis(1), joy.getRawAxis(3), true);
+	public void drive(Joystick joy)
+	{
+		DRIVE.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(2), true);
 	}
 }
