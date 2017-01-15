@@ -19,8 +19,10 @@ public class TankDriveWithJoystick extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void execute() {
+	protected void execute()
+	{
 		Robot.drivetrain.drive(Robot.oi.getJoystick());
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

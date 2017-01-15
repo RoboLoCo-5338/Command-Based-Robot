@@ -16,6 +16,7 @@ import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
  */
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
+	Command PowerSync;
 
 	public static DriveTrain drivetrain;
 	public static OI oi;
@@ -54,6 +55,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
+		PowerSync.start();
 	}
 
 	/**
