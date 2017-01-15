@@ -14,7 +14,8 @@ import org.usfirst.frc.team5338.robot.Robot;
 public class ArcadeDriveWithJoystick extends Command
 {
 	
-	public ArcadeDriveWithJoystick() {
+	public ArcadeDriveWithJoystick()
+	{
 		requires(Robot.drivetrain);
 	}
 
