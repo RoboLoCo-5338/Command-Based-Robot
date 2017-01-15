@@ -21,7 +21,7 @@ public class PowerSync extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute()
     {
-    	Robot.drivetrain.DRIVE.setMaxOutput(1 - ((1 + Robot.oi.getJoystick().getRawAxis(3)) / 2));
+    	Robot.drivetrain.DRIVE.setMaxOutput(1 - ((1 + Robot.oi.getJoystick().getRawAxis(2)) / 2)); //CHANGED FOR QDRIVERSTATION, 2 should be 3
     }
 
     // Make this return true when this Command no longer needs to run execute()

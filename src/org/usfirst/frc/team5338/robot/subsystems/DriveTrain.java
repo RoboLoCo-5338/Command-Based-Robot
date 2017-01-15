@@ -53,6 +53,6 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(2), true);
+		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(0), true);  //CHANGED FOR QDRIVERSTATION, 0 should be 2
 	}
 }
