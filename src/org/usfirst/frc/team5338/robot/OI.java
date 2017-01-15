@@ -2,7 +2,6 @@ package org.usfirst.frc.team5338.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5338.robot.commands.*;
 
@@ -12,8 +11,15 @@ import org.usfirst.frc.team5338.robot.commands.*;
  */
 public class OI {
 	private final Joystick joy = new Joystick(0);
+	private JoystickButton Button_5;
+	private JoystickButton Button_6;
 	public OI()
 	{
+		Button_5= new JoystickButton(joy, 5);
+		Button_6= new JoystickButton(joy, 6);
+		
+		Button_5.whenPressed(new PowerSettingMax());
+		Button_6.whenPressed(new PowerSettingMin());
 	}
 
 	public Joystick getJoystick() {
