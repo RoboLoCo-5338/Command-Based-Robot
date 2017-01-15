@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
- * the robots chassis. These include four drive motors, a left and right encoder
- * and a gyro.
+ * the robots chassis. These include four drive motors.
  */
 public class DriveTrain extends Subsystem {
 	private final CANTalon DRIVEL1 = new CANTalon(1);
@@ -29,7 +28,7 @@ public class DriveTrain extends Subsystem {
 
 	/**
 	 * When no other command is running let the operator drive around using the
-	 * PS3 joystick.
+	 * Xbox joystick.
 	 */
 	@Override
 	public void initDefaultCommand() {
@@ -37,7 +36,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	/**
-	 * Tank style driving for the DriveTrain.
+	 * Arcade style driving for the DriveTrain.
 	 * 
 	 * @param left
 	 *            Speed in range [-1,1]
@@ -50,10 +49,10 @@ public class DriveTrain extends Subsystem {
 
 	/**
 	 * @param joy
-	 *            The XBOX style joystick to use to drive tank style.
+	 *            The XBOX style joystick to use to drive arcade style.
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(joy.getRawAxis(1), joy.getRawAxis(0), true);
+		DRIVE.arcadeDrive(joy.getRawAxis(0), joy.getRawAxis(2), true);
 	}
 }
