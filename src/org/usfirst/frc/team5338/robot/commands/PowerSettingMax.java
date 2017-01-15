@@ -2,6 +2,7 @@ package org.usfirst.frc.team5338.robot.commands;
 
 import org.usfirst.frc.team5338.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -18,6 +19,7 @@ public class PowerSettingMax extends Command
     protected void initialize()
     {
     	Robot.drivetrain.DRIVE.setMaxOutput(0.9);
+    	Robot.oi.getJoystick().setRumble(RumbleType.kLeftRumble, 1);
     }
 
     // Called repeatedly when this Command is scheduled to run
