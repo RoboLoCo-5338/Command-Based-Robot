@@ -22,8 +22,6 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain()
 	{
 		super();
-		//DRIVE.setSensitivity(0.5);
-		DRIVE.setSafetyEnabled(true);
 		DRIVE.setMaxOutput(0.5);
 	}
 
