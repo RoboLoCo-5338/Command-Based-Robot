@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.commands.ArcadeDriveWithJoystick;
-import org.usfirst.frc.team5338.robot.commands.DriveGroup;
 
 import com.ctre.CANTalon;
 
@@ -54,6 +53,6 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(0), true);  //CHANGED FOR QDRIVERSTATION, 0 should be 2
+		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(2), true);
 	}
 }
