@@ -19,7 +19,8 @@ public class DriveTrain extends Subsystem {
     private final CANTalon DRIVER2 = new CANTalon(4);
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 
-	public DriveTrain() {
+	public DriveTrain()
+	{
 		super();
 		//DRIVE.setSensitivity(0.5);
 		DRIVE.setSafetyEnabled(true);
@@ -31,7 +32,8 @@ public class DriveTrain extends Subsystem {
 	 * Xbox joystick.
 	 */
 	@Override
-	public void initDefaultCommand() {
+	public void initDefaultCommand()
+	{
 		setDefaultCommand(new ArcadeDriveWithJoystick());
 	}
 
@@ -43,8 +45,9 @@ public class DriveTrain extends Subsystem {
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double rotation) {
-		DRIVE.arcadeDrive(forward, rotation, true);
+	public void drive(double forward, double rotation)
+	{
+		DRIVE.arcadeDrive(forward, rotation, false);
 	}
 
 	/**
@@ -53,6 +56,6 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(2), true);
+		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(2), false);
 	}
 }

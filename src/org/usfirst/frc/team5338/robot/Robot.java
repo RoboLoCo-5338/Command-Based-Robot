@@ -18,7 +18,8 @@ import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot
+{
 	Command autonomousCommand;
 
 	public static DriveTrain drivetrain;
@@ -29,7 +30,8 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
+	public void robotInit()
+	{
 		// Initialize all subsystems
 		drivetrain = new DriveTrain();
 		oi = new OI();
@@ -45,7 +47,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	@Override
-	public void autonomousInit() {
+	public void autonomousInit()
+	{
 		autonomousCommand.start(); // schedule the autonomous command (example)
 	}
 
@@ -53,12 +56,14 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	@Override
-	public void autonomousPeriodic() {
+	public void autonomousPeriodic()
+	{
 		Scheduler.getInstance().run();
 	}
 
 	@Override
-	public void teleopInit() {
+	public void teleopInit()
+	{
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
