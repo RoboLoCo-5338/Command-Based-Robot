@@ -1,21 +1,25 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.commands.MechanumDriveWithJoystick;
+import com.kauailabs.navx.frc.AHRS;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
  * the robots chassis. These include four drive motors.
  */
-public class DriveTrain extends Subsystem {
-	private final CANTalon DRIVEL1 = new CANTalon(1);
-    private final CANTalon DRIVEL2 = new CANTalon(2);
-    private final CANTalon DRIVER1 = new CANTalon(3);
+public class DriveTrain extends Subsystem
+{
+	public static final AHRS IMU = new AHRS(SPI.Port.kMXP, (byte) 200);
+	private final CANTalon DRIVEL1 = new CANTalon(2);
+    private final CANTalon DRIVEL2 = new CANTalon(3);
+    private final CANTalon DRIVER1 = new CANTalon(1);
     private final CANTalon DRIVER2 = new CANTalon(4);
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 
@@ -43,8 +47,9 @@ public class DriveTrain extends Subsystem {
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double rotation)
+	public void drive(double forward, double strafe, double rotation)
 	{
+		DRIVE.mecanumDrive_Cartesian(forward, strafe, rotation, IMU.getCompassHeading());
 		DRIVE.arcadeDrive(forward, rotation, false);
 	}
 
@@ -54,6 +59,6 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(-joy.getRawAxis(1), -joy.getRawAxis(2), false);
+		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(1), joy.getRawAxis(0), joy.getRawAxis(2), IMU.getCompassHeading());
 	}
 }
