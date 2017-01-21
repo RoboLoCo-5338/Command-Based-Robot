@@ -67,14 +67,14 @@ public class DriveTrain extends Subsystem
 	{
 		if(joy.getRawButton(5))
 		{
-			DRIVEL1.set(0.5);
+			DRIVEL2.set(0.5);
 			DRIVER1.set(0.5);
 			DRIVEL1.set(-0.5);
 			DRIVER2.set(-0.5);	
 		}
 		if(joy.getRawButton(6))
 		{
-			DRIVEL1.set(-0.5);
+			DRIVEL2.set(-0.5);
 			DRIVER1.set(-0.5);
 			DRIVEL1.set(0.5);
 			DRIVER2.set(0.5);	
