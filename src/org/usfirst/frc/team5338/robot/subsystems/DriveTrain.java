@@ -54,7 +54,8 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double forward, double strafe, double rotation)
 	{
-		DRIVE.mecanumDrive_Cartesian(forward, strafe, rotation, IMU.getCompassHeading());
+		
+		DRIVE.mecanumDrive_Cartesian(forward, strafe, rotation, 0);
 	}
 
 	/**
@@ -63,6 +64,6 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(1), joy.getRawAxis(0), joy.getRawAxis(2), IMU.getCompassHeading());
+		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), joy.getRawAxis(2), 0);
 	}
 }
