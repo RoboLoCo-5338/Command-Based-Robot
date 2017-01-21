@@ -56,7 +56,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double forward, double direction, double rotation)
 	{
-		//DRIVE.mecanumDrive_Cartesian(forward, direction, rotation, 0);
+		DRIVE.mecanumDrive_Cartesian(forward, direction, rotation, 0);
 	}
 
 	/**
@@ -65,20 +65,6 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		if(joy.getRawButton(5))
-		{
-			DRIVEL2.set(0.5);
-			DRIVER1.set(0.5);
-			DRIVEL1.set(-0.5);
-			DRIVER2.set(-0.5);	
-		}
-		if(joy.getRawButton(6))
-		{
-			DRIVEL2.set(-0.5);
-			DRIVER1.set(-0.5);
-			DRIVEL1.set(0.5);
-			DRIVER2.set(0.5);	
-		}
-		//DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), joy.getRawAxis(2), 0);
+		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), joy.getRawAxis(2), 0);
 	}
 }
