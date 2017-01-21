@@ -11,6 +11,7 @@
 			<attribute name="javadoc_location" value="file:/Users/Arvind/wpilib/user/java/docs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="navx-mxp"/>
+	<classpathentry kind="var" path="navx-mxp" sourcepath="/navx-mxp.sources"/>
+	<classpathentry kind="lib" path="/Users/Arvind/navx-mxp/java/lib/navx_frc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
