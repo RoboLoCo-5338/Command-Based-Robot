@@ -1,9 +1,10 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.MechanumDriveWithJoystick;
-import com.kauailabs.navx.frc.AHRS;
 
 import com.ctre.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -26,6 +27,11 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
+		while(DriveTrain.IMU.isCalibrating())
+	    {
+	    }
+		DriveTrain.IMU.reset();
+		DriveTrain.IMU.zeroYaw();
 		DRIVE.setMaxOutput(0.5);
 	}
 
@@ -47,10 +53,9 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double strafe, double rotation, double heading)
+	public void drive(double forward, double strafe, double rotation)
 	{
 		DRIVE.mecanumDrive_Cartesian(forward, strafe, rotation, IMU.getCompassHeading());
-		DRIVE.arcadeDrive(forward, rotation, false);
 	}
 
 	/**
