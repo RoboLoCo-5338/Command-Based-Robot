@@ -47,7 +47,7 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double strafe, double rotation)
+	public void drive(double forward, double strafe, double rotation, double heading)
 	{
 		DRIVE.mecanumDrive_Cartesian(forward, strafe, rotation, IMU.getCompassHeading());
 		DRIVE.arcadeDrive(forward, rotation, false);
