@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
@@ -52,10 +53,9 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double strafe, double rotation)
+	public void drive(double forward, double direction, double rotation)
 	{
-		
-		DRIVE.mecanumDrive_Cartesian(forward, strafe, rotation, 0);
+		DRIVE.mecanumDrive_Cartesian(forward, direction, rotation, 0);
 	}
 
 	/**
