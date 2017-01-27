@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
@@ -63,6 +64,14 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), joy.getRawAxis(2), 0);
+		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), rotationDeadZone(joy.getRawAxis(2)), 0);
+		SmartDashboard.putDouble("Rotation", joy.getRawAxis(2));
+	}
+	public double rotationDeadZone(double Value){
+		if (Value > 0.3 || Value < -0.3){
+		 return Value;
+		}
+		double Zero = 0;
+		return Zero;
 	}
 }
