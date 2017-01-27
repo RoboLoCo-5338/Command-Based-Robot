@@ -24,7 +24,7 @@ public class MechanumDriveWithJoystick extends Command
 	protected void execute()
 	{
 		Robot.drivetrain.DRIVE.setMaxOutput(1 - ((1 + Robot.oi.getJoystick().getRawAxis(3)) / 2));
-		Robot.drivetrain.drive(Robot.oi.getJoystick());	
+		Robot.drivetrain.drive(Robot.oi.getJoystick());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
