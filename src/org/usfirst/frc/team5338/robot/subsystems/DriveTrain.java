@@ -60,7 +60,7 @@ public class DriveTrain extends Subsystem
 		DRIVE.arcadeDrive(-joy.getRawAxis(1), -rotationDeadZone(joy.getRawAxis(2)));
 	}
 	public double rotationDeadZone(double Value){
-		if (Value > 0.3 || Value < -0.3){
+		if (Value > 0.25 || Value < -0.25){
 		 return Value;
 		}
 		double Zero = 0;
