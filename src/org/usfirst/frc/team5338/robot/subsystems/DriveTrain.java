@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoystick;
+import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.CANTalon;
 
@@ -35,7 +35,7 @@ public class DriveTrain extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new TankDriveWithJoystick());
+		setDefaultCommand(new TankDriveWithJoysticks());
 	}
 
 	/**
@@ -55,8 +55,8 @@ public class DriveTrain extends Subsystem
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.
 	 */
-	public void drive(Joystick joy)
+	public void drive(Joystick joy1, Joystick joy2)
 	{
-		DRIVE.tankDrive(-joy.getRawAxis(1), -joy.getRawAxis(5), true);
+		DRIVE.tankDrive(-joy1.getRawAxis(1), -joy2.getRawAxis(1), true);
 	}
 }

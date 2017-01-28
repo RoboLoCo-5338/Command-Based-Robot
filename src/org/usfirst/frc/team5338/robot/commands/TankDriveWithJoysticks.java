@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5338.robot.Robot;
 
 /**
- * Have the robot drive tank style using the Xbox Joystick until interrupted.
+ * Have the robot drive tank style using the two Joysticks until interrupted.
  */
-public class TankDriveWithJoystick extends Command
+public class TankDriveWithJoysticks extends Command
 {
 	
-	public TankDriveWithJoystick()
+	public TankDriveWithJoysticks()
 	{
 		requires(Robot.drivetrain);
 	}
@@ -23,7 +23,7 @@ public class TankDriveWithJoystick extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.drive(Robot.oi.getJoystick());
+		Robot.drivetrain.drive(Robot.oi.getJoystick1(), Robot.oi.getJoystick2());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
