@@ -25,7 +25,7 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
-		DRIVE.setMaxOutput(0.5);
+		DRIVE.setMaxOutput(0.75);
 	}
 
 	/**
@@ -46,9 +46,9 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double rotation)
+	public void drive(double left, double right)
 	{
-		DRIVE.arcadeDrive(forward, rotation);
+		DRIVE.tankDrive(left, right, true);
 	}
 
 	/**
@@ -57,13 +57,6 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(-joy.getRawAxis(1), -rotationDeadZone(joy.getRawAxis(2)));
-	}
-	public double rotationDeadZone(double Value){
-		if (Value > 0.25 || Value < -0.25){
-		 return Value;
-		}
-		double Zero = 0;
-		return Zero;
+		DRIVE.tankDrive(-joy.getRawAxis(1), -joy.getRawAxis(5), true);
 	}
 }
