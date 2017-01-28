@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.commands.MecanumDriveWithJoystick;
+import org.usfirst.frc.team5338.robot.commands.MechanumDriveWithJoystick;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -41,7 +41,7 @@ public class DriveTrain extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new MecanumDriveWithJoystick());
+		setDefaultCommand(new MechanumDriveWithJoystick());
 	}
 
 	/**
