@@ -25,12 +25,12 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
-		DRIVE.setMaxOutput(0.75);
+		DRIVE.setMaxOutput(1);
 	}
 
 	/**
 	 * When no other command is running let the operator drive around using the
-	 * Xbox joystick.
+	 * twin joysticks.
 	 */
 	@Override
 	public void initDefaultCommand()
@@ -48,7 +48,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double left, double right)
 	{
-		DRIVE.tankDrive(left, right, true);
+		DRIVE.tankDrive(left, right, false);
 	}
 
 	/**
@@ -57,6 +57,6 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy1, Joystick joy2)
 	{
-		DRIVE.tankDrive(-joy1.getRawAxis(1), -joy2.getRawAxis(1), true);
+		DRIVE.tankDrive(-joy1.getRawAxis(1), -joy2.getRawAxis(1), false);
 	}
 }
