@@ -11,10 +11,10 @@ import org.usfirst.frc.team5338.robot.Robot;
 /**
  * Have the robot drive tank style using the Xbox Joystick until interrupted.
  */
-public class MecanumDriveWithJoystick extends Command
+public class TankDriveWithJoystick extends Command
 {
 	
-	public MecanumDriveWithJoystick()
+	public TankDriveWithJoystick()
 	{
 		requires(Robot.drivetrain);
 	}
