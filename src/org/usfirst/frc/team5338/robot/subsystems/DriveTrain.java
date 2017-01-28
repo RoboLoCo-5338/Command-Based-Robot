@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
@@ -70,19 +69,18 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), rotationDeadZone(joy.getRawAxis(2)), IMU.getAngle());
-		SmartDashboard.putDouble("Rotation", joy.getRawAxis(2));
-		SmartDashboard.putInt("DRIVEL1", DRIVEL1.getEncPosition());
-		SmartDashboard.putInt("DRIVEL2", DRIVEL2.getEncPosition());
-		SmartDashboard.putInt("DRIVER1", DRIVER1.getEncPosition());
-		SmartDashboard.putInt("DRIVER2", DRIVER2.getEncPosition());
-
+		DRIVE.mecanumDrive_Cartesian(-joy.getRawAxis(1), joy.getRawAxis(0), joystickDeadZone(joy.getRawAxis(3)), IMU.getAngle());
 	}
-	public double rotationDeadZone(double Value){
-		if (Value > 0.3 || Value < -0.3){
-		 return Value;
+	public double joystickDeadZone(double value)
+	{
+		if (value > 0.15 || value < -0.15)
+		{
+		 return (value - 0.15)/0.85;
 		}
-		double Zero = 0;
-		return Zero;
+		else if (value < -0.15)
+		{
+		 return (value + 0.15)/0.85;
+		}
+		return 0.0;
 	}
 }
