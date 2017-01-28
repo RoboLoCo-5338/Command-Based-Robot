@@ -69,7 +69,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.mecanumDrive_Cartesian(-joy.getRawAxis(1), joy.getRawAxis(0), joystickDeadZone(joy.getRawAxis(3)), IMU.getAngle());
+		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), joystickDeadZone(joy.getRawAxis(2)), IMU.getAngle());
 	}
 	public double joystickDeadZone(double value)
 	{
