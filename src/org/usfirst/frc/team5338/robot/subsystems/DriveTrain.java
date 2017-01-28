@@ -46,9 +46,9 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double direction, double rotation)
+	public void drive(double forward, double rotation)
 	{
-		DRIVE.mecanumDrive_Cartesian(forward, direction, rotation, 0);
+		DRIVE.arcadeDrive(forward, rotation);
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		DRIVE.arcadeDrive(joy.getRawAxis(1), rotationDeadZone(joy.getRawAxis(2)));
+		DRIVE.arcadeDrive(-joy.getRawAxis(1), -rotationDeadZone(joy.getRawAxis(2)));
 	}
 	public double rotationDeadZone(double Value){
 		if (Value > 0.3 || Value < -0.3){
