@@ -56,9 +56,6 @@ public class Robot extends IterativeRobot
 	    			 centerX.add(r.x + (r.width / 2));
 	    		 Collections.sort(centerX);
 	    		 SmartDashboard.putString("tape","left: "+centerX.get(0)+", right: "+centerX.get(1));
-//	    		 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-//	             double centerX = r.x + (r.width / 2);
-//	             SmartDashboard.putNumber("CenterX", centerX);
 	       	 }
 	    }).start();
 

@@ -25,7 +25,8 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
-		DRIVE.setMaxOutput((1-Robot.oi.getJoystick2().getRawAxis(2))/2);
+		DRIVE.setMaxOutput(1);
+		//(1-(Robot.oi.getJoystick2().getRawAxis(2)))/2)
 	}
 
 	/**
