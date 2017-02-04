@@ -1,9 +1,8 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.commands.MecanumDriveWithJoystick;
+import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.CANTalon;
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -16,38 +15,27 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem
 {
-	public static final AHRS IMU = new AHRS(SPI.Port.kMXP, (byte) 200);
-	private final CANTalon DRIVEL1 = new CANTalon(2);
+	private final CANTalon DRIVEL1 = new CANTalon(4);
     private final CANTalon DRIVEL2 = new CANTalon(3);
-    private final CANTalon DRIVER1 = new CANTalon(1);
-    private final CANTalon DRIVER2 = new CANTalon(4);
+    private final CANTalon DRIVER1 = new CANTalon(2);
+    private final CANTalon DRIVER2 = new CANTalon(1);
     
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 
 	public DriveTrain()
 	{
 		super();
-		DRIVEL1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-		DRIVEL2.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-		DRIVER1.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-		DRIVER2.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Absolute);
-
-		while(DriveTrain.IMU.isCalibrating())
-	    {
-	    }
-		DriveTrain.IMU.reset();
-		DriveTrain.IMU.zeroYaw();
-		DRIVE.setMaxOutput(0.5);
+		DRIVE.setMaxOutput(1);
 	}
 
 	/**
 	 * When no other command is running let the operator drive around using the
-	 * Xbox joystick.
+	 * twin joysticks.
 	 */
 	@Override
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new MecanumDriveWithJoystick());
+		setDefaultCommand(new TankDriveWithJoysticks());
 	}
 
 	/**
@@ -58,18 +46,18 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double direction, double rotation)
+	public void drive(double left, double right)
 	{
-		DRIVE.mecanumDrive_Cartesian(forward, direction, rotation, 0);
+		DRIVE.tankDrive(left, right, false);
 	}
 
 	/**
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.
 	 */
-	public void drive(Joystick joy)
+	public void drive(Joystick joy1, Joystick joy2)
 	{
-		DRIVE.mecanumDrive_Cartesian(joy.getRawAxis(0), joy.getRawAxis(1), joystickDeadZone(joy.getRawAxis(2)), IMU.getAngle());
+		DRIVE.tankDrive(joystickDeadZone(-joy1.getRawAxis(1)), joystickDeadZone(-joy2.getRawAxis(1)), false);
 	}
 	public double joystickDeadZone(double value)
 	{
