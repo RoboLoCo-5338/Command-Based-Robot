@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot
 	    
 	    new VisionThread(camera, new GripPipeline(), pipeline ->
 	    {
-	    if (!pipeline.filterLinesOutput().isEmpty())
+	    /*if (!pipeline.filterLinesOutput().isEmpty())
 	    	{
 	            ArrayList<GripPipeline.Line> lines = pipeline.findLinesOutput();
 	            ArrayList<Double> x = new ArrayList<Double>();
@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot
 	            	array += i + ", ";
 	            }
 	            SmartDashboard.putString("array", array);
-	        }
+	        }*/
 	    }).start();
 
 	    drivetrain = new DriveTrain();
