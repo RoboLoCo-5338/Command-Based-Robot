@@ -23,12 +23,7 @@ public class TankDriveWithJoysticks extends Command
 	@Override
 	protected void execute()
 	{
-<<<<<<< HEAD:src/org/usfirst/frc/team5338/robot/commands/TankDriveWithJoysticks.java
 		Robot.drivetrain.drive(Robot.oi.getJoystick1(), Robot.oi.getJoystick2());
-=======
-		//Robot.drivetrain.DRIVE.setMaxOutput(1 - ((1 + Robot.oi.getJoystick().getRawAxis(3)) / 2));
-		Robot.drivetrain.drive(Robot.oi.getJoystick());
->>>>>>> master:src/org/usfirst/frc/team5338/robot/commands/MecanumDriveWithJoystick.java
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
