@@ -72,8 +72,17 @@ public class Robot extends IterativeRobot
 	            }
 	            String array = "X: ";
 	            for(Double i: x)
+<<<<<<< Upstream, based on origin/Tank_Drive
 	            {
 	            	array += i + ", ";
+=======
+	            	array=array+((int)i.doubleValue())+", ";
+	            SmartDashboard.putString("array", array);
+	            
+	            //Rect r = Imgproc.boundingRect_0(pipeline.filterLinesOutput().get(0))
+	            synchronized (imglock) {
+	                //centerX = r.x + (r.width /2);
+>>>>>>> 8fcca13 Going to Merge
 	            }
 	            SmartDashboard.putString("array", array);
 	        }*/
