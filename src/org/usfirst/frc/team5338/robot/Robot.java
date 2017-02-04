@@ -14,6 +14,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
@@ -49,8 +50,10 @@ public class Robot extends IterativeRobot
 	    	 if (!pipeline.filterContoursOutput().isEmpty())
 	    	 {
 	    		 ArrayList<Rect> rects = new ArrayList<Rect>();
-	    		 for(int i=0;i<pipeline.filterContoursOutput().size()+1;i++)
-	    			 rects.add(Imgproc.boundingRect(pipeline.filterContoursOutput().get(i)));
+	    		 for(MatOfPoint mop: pipeline.filterContoursOutput())
+	    		 {
+	    			 rects.add(Imgproc.boundingRect(mop));
+	    		 }
 	    		 ArrayList<Integer> centerX = new ArrayList<Integer>();
 	    		 for(Rect r: rects)
 	    			 centerX.add(r.x + (r.width / 2));
