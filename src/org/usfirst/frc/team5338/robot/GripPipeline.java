@@ -15,6 +15,8 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
 
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+
 /**
 * GripPipeline class.
 *
@@ -22,7 +24,7 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline {
+public class GripPipeline implements VisionPipeline {
 
 	//Outputs
 	private Mat resizeImageOutput = new Mat();
