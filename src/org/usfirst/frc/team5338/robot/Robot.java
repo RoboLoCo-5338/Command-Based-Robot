@@ -13,13 +13,9 @@ import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
 import org.usfirst.frc.team5338.robot.GripPipeline;
-import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
-import org.opencv.core.Rect;
 
 import java.util.*;
 
