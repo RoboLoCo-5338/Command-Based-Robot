@@ -23,7 +23,8 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline implements VisionPipeline {
+public class GripPipeline implements VisionPipeline
+{
 
 	//Outputs
 	private Mat resizeImageOutput = new Mat();
@@ -35,7 +36,8 @@ public class GripPipeline implements VisionPipeline {
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
-	static {
+	static
+	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
 
@@ -102,14 +104,14 @@ public class GripPipeline implements VisionPipeline {
 		double filterContoursMinRatio = 0.0;
 		double filterContoursMaxRatio = 3.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
-
 	}
 
 	/**
 	 * This method is a generated getter for the output of a Resize_Image.
 	 * @return Mat output from Resize_Image.
 	 */
-	public Mat resizeImageOutput() {
+	public Mat resizeImageOutput()
+	{
 		return resizeImageOutput;
 	}
 
@@ -117,7 +119,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a Blur.
 	 * @return Mat output from Blur.
 	 */
-	public Mat blurOutput() {
+	public Mat blurOutput()
+	{
 		return blurOutput;
 	}
 
@@ -125,7 +128,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a HSL_Threshold.
 	 * @return Mat output from HSL_Threshold.
 	 */
-	public Mat hslThresholdOutput() {
+	public Mat hslThresholdOutput()
+	{
 		return hslThresholdOutput;
 	}
 
@@ -133,7 +137,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a Mask.
 	 * @return Mat output from Mask.
 	 */
-	public Mat maskOutput() {
+	public Mat maskOutput()
+	{
 		return maskOutput;
 	}
 
@@ -141,7 +146,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a RGB_Threshold.
 	 * @return Mat output from RGB_Threshold.
 	 */
-	public Mat rgbThresholdOutput() {
+	public Mat rgbThresholdOutput()
+	{
 		return rgbThresholdOutput;
 	}
 
@@ -149,7 +155,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a CV_Canny.
 	 * @return Mat output from CV_Canny.
 	 */
-	public Mat cvCannyOutput() {
+	public Mat cvCannyOutput()
+	{
 		return cvCannyOutput;
 	}
 
@@ -157,7 +164,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a Find_Contours.
 	 * @return ArrayList<MatOfPoint> output from Find_Contours.
 	 */
-	public ArrayList<MatOfPoint> findContoursOutput() {
+	public ArrayList<MatOfPoint> findContoursOutput()
+	{
 		return findContoursOutput;
 	}
 
@@ -165,7 +173,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a Filter_Contours.
 	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
 	 */
-	public ArrayList<MatOfPoint> filterContoursOutput() {
+	public ArrayList<MatOfPoint> filterContoursOutput()
+	{
 		return filterContoursOutput;
 	}
 
@@ -179,7 +188,8 @@ public class GripPipeline implements VisionPipeline {
 	 * @param output The image in which to store the output.
 	 */
 	private void resizeImage(Mat input, double width, double height,
-		int interpolation, Mat output) {
+		int interpolation, Mat output)
+	{
 		Imgproc.resize(input, output, new Size(width, height), 0.0, 0.0, interpolation);
 	}
 
@@ -193,27 +203,34 @@ public class GripPipeline implements VisionPipeline {
 
 		private final String label;
 
-		BlurType(String label) {
+		BlurType(String label)
+		{
 			this.label = label;
 		}
 
-		public static BlurType get(String type) {
-			if (BILATERAL.label.equals(type)) {
+		public static BlurType get(String type)
+		{
+			if (BILATERAL.label.equals(type)) 
+			{
 				return BILATERAL;
 			}
-			else if (GAUSSIAN.label.equals(type)) {
+			else if (GAUSSIAN.label.equals(type))
+			{
 			return GAUSSIAN;
 			}
-			else if (MEDIAN.label.equals(type)) {
+			else if (MEDIAN.label.equals(type))
+			{
 				return MEDIAN;
 			}
-			else {
+			else
+			{
 				return BOX;
 			}
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return this.label;
 		}
 	}
