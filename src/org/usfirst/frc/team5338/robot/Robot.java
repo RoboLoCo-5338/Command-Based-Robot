@@ -21,10 +21,7 @@ import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import org.opencv.core.Rect;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.lang.Math;
+import java.util.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,9 +35,6 @@ public class Robot extends IterativeRobot
 	Command autonomousCommand;
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
-	
-	private VisionThread visionThread;
-	private final Object imglock = new Object();
 
 	public static DriveTrain drivetrain;
 	public static OI oi;
@@ -57,8 +51,10 @@ public class Robot extends IterativeRobot
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
-	    visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-	    /*    if (!pipeline.filterLinesOutput().isEmpty())*/ {
+	    new VisionThread(camera, new GripPipeline(), pipeline ->
+	    {
+	    if (!pipeline.filterLinesOutput().isEmpty())
+	    	{
 	            ArrayList<GripPipeline.Line> lines = pipeline.findLinesOutput();
 	            ArrayList<Double> x = new ArrayList<Double>();
 	            for(int i=0;i<lines.size();i++)
@@ -76,29 +72,18 @@ public class Robot extends IterativeRobot
 	            }
 	            String array = "X: ";
 	            for(Double i: x)
-	            	array=array+((int)i.doubleValue())+", ";
-	            SmartDashboard.putString("array", array);
-	            
-	            synchronized (imglock) {
-	                
+	            {
+	            	array += i + ", ";
 	            }
+	            SmartDashboard.putString("array", array);
 	        }
-	    });
-		visionThread.start();
+	    }).start();
 
 	    drivetrain = new DriveTrain();
 		oi = new OI();
 
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
-
-//			new Thread(() ->
-//			{
-//			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-//			camera.setResolution(720, 576);
-//			camera.setFPS(10);
-//			}
-//			).start();
 	}
 
 	@Override
