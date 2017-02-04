@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.Collections;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -38,7 +41,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void robotInit()
 	{
-		final double tapeDistanceRatio = 3.0;	
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
@@ -46,9 +48,17 @@ public class Robot extends IterativeRobot
 	    {
 	    	 if (!pipeline.filterContoursOutput().isEmpty())
 	    	 {
-	             Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-	             double centerX = r.x + (r.width / 2);
-	             SmartDashboard.putNumber("CenterX", centerX);
+	    		 ArrayList<Rect> rects = new ArrayList<Rect>();
+	    		 for(int i=0;i<pipeline.filterContoursOutput().size()+1;i++)
+	    			 rects.add(Imgproc.boundingRect(pipeline.filterContoursOutput().get(i)));
+	    		 ArrayList<Integer> centerX = new ArrayList<Integer>();
+	    		 for(Rect r: rects)
+	    			 centerX.add(r.x + (r.width / 2));
+	    		 Collections.sort(centerX);
+	    		 SmartDashboard.putString("tape","left: "+centerX.get(0)+", right: "+centerX.get(1));
+//	    		 Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+//	             double centerX = r.x + (r.width / 2);
+//	             SmartDashboard.putNumber("CenterX", centerX);
 	       	 }
 	    }).start();
 
