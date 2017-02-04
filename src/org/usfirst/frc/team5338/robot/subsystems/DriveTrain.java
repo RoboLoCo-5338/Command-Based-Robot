@@ -57,6 +57,18 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy1, Joystick joy2)
 	{
-		DRIVE.tankDrive(-joy1.getRawAxis(1), -joy2.getRawAxis(1), false);
+		DRIVE.tankDrive(joystickDeadZone(-joy1.getRawAxis(1)), joystickDeadZone(-joy2.getRawAxis(1)), false);
+	}
+	public double joystickDeadZone(double value)
+	{
+		if (value > 0.15 || value < -0.15)
+		{
+		 return (value - 0.15)/0.85;
+		}
+		else if (value < -0.15)
+		{
+		 return (value + 0.15)/0.85;
+		}
+		return 0.0;
 	}
 }
