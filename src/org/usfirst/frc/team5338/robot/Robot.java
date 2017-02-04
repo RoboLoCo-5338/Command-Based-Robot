@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5338.robot;
 
-//import edu.wpi.cscore.UsbCamera;
-//import edu.wpi.first.wpilibj.CameraServer;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,8 +14,8 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 
-import java.util.*;
-
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -34,7 +31,6 @@ public class Robot extends IterativeRobot
 
 	public static DriveTrain drivetrain;
 	public static OI oi;
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -42,46 +38,18 @@ public class Robot extends IterativeRobot
 	@Override
 	public void robotInit()
 	{
-		final double tapeDistanceRatio = 3.0;
-		
+		final double tapeDistanceRatio = 3.0;	
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
 	    new VisionThread(camera, new GripPipeline(), pipeline ->
 	    {
-	    /*if (!pipeline.filterLinesOutput().isEmpty())
-	    	{
-	            ArrayList<GripPipeline.Line> lines = pipeline.findLinesOutput();
-	            ArrayList<Double> x = new ArrayList<Double>();
-	            for(int i=0;i<lines.size();i++)
-	            {
-	            	x.add((lines.get(i).x1+lines.get(i).x2)/2);
-	            }
-	            Collections.sort(x);
-	            for(int i=0;i<x.size()-1;i++)
-	            {
-	            	if(Math.abs(x.get(i)-x.get(i+1))<5)
-	            	{
-	            		x.remove(i);
-	            		i--;
-	            	}
-	            }
-	            String array = "X: ";
-	            for(Double i: x)
-<<<<<<< Upstream, based on origin/Tank_Drive
-	            {
-	            	array += i + ", ";
-=======
-	            	array=array+((int)i.doubleValue())+", ";
-	            SmartDashboard.putString("array", array);
-	            
-	            //Rect r = Imgproc.boundingRect_0(pipeline.filterLinesOutput().get(0))
-	            synchronized (imglock) {
-	                //centerX = r.x + (r.width /2);
->>>>>>> 8fcca13 Going to Merge
-	            }
-	            SmartDashboard.putString("array", array);
-	        }*/
+	    	 if (!pipeline.filterContoursOutput().isEmpty())
+	    	 {
+	             Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	             double centerX = r.x + (r.width / 2);
+	             SmartDashboard.putNumber("CenterX", centerX);
+	       	 }
 	    }).start();
 
 	    drivetrain = new DriveTrain();
@@ -90,13 +58,11 @@ public class Robot extends IterativeRobot
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
 	}
-
 	@Override
 	public void autonomousInit()
 	{
 		autonomousCommand.start(); // schedule the autonomous command (example)
 	}
-
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -105,7 +71,6 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 	}
-
 	@Override
 	public void teleopInit()
 	{
@@ -114,9 +79,7 @@ public class Robot extends IterativeRobot
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		autonomousCommand.cancel();
-
 	}
-
 	/**
 	 * This function is called periodically during operator control
 	 */
