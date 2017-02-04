@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.CANTalon;
@@ -25,7 +26,7 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
-		DRIVE.setMaxOutput(1);
+		DRIVE.setMaxOutput((1-Robot.oi.getJoystick2().getRawAxis(2))/2);
 	}
 
 	/**
@@ -61,13 +62,13 @@ public class DriveTrain extends Subsystem
 	}
 	public double joystickDeadZone(double value)
 	{
-		if (value > 0.15 || value < -0.15)
+		if (value > 0.10 || value < -0.10)
 		{
-		 return (value - 0.15)/0.85;
+		 return (value - 0.10)/0.90;
 		}
-		else if (value < -0.15)
+		else if (value < -0.10)
 		{
-		 return (value + 0.15)/0.85;
+		 return (value + 0.10)/0.90;
 		}
 		return 0.0;
 	}
