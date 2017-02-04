@@ -7,8 +7,12 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+<<<<<<< HEAD
 	private final Joystick joy1 = new Joystick(0);
 	private final Joystick joy2 = new Joystick(1);
+=======
+	private final Joystick joy = new Joystick(0);
+>>>>>>> master
 	public OI()
 	{
 	}
