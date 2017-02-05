@@ -26,8 +26,8 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 public class Robot extends IterativeRobot
 {
 	Command autonomousCommand;
-	private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240;
+	private static final int IMG_WIDTH = 640;
+	private static final int IMG_HEIGHT = 360;
 
 	public static DriveTrain drivetrain;
 	public static OI oi;
