@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.CANTalon;
@@ -24,10 +25,8 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
-		DRIVE.setMaxOutput(1);
-		//(1-(Robot.oi.getJoystick2().getRawAxis(2)))/2)
+		DRIVE.setMaxOutput((1-(Robot.oi.getJoystick2().getRawAxis(2)))/2);
 	}
-
 	/**
 	 * When no other command is running let the operator drive around using the
 	 * twin joysticks.
@@ -37,7 +36,6 @@ public class DriveTrain extends Subsystem
 	{
 		setDefaultCommand(new TankDriveWithJoysticks());
 	}
-
 	/**
 	 * Arcade style driving for the DriveTrain.
 	 * 
@@ -50,7 +48,6 @@ public class DriveTrain extends Subsystem
 	{
 		DRIVE.tankDrive(left, right, false);
 	}
-
 	/**
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.

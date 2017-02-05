@@ -1,23 +1,23 @@
 package org.usfirst.frc.team5338.robot;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.OptionalDouble;
-
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Collections;
+//import java.util.OptionalDouble;
+//
+//import org.opencv.core.MatOfPoint;
+//import org.opencv.core.Rect;
+//import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+//import edu.wpi.cscore.UsbCamera;
+//import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.vision.VisionThread;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -28,15 +28,15 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 public class Robot extends IterativeRobot
 {
 	Command autonomousCommand;
-	private static final int IMG_WIDTH = 640;
-	private static final int IMG_HEIGHT = 360;
+//	private static final int IMG_WIDTH = 640;
+//	private static final int IMG_HEIGHT = 360;
 	
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 	
-	private static double[] xLocations = new double[8];
-	private static int counter = 0;
-	private final Object imgLock = new Object();
+//	private static double[] xLocations = new double[8];
+//	private static int counter = 0;
+//	private final Object imgLock = new Object();
 	
 	/**
 	 * This function is run when the robot is first started up and should be

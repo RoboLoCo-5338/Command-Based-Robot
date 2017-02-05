@@ -318,9 +318,5 @@ public class GripPipeline implements VisionPipeline {
 			output.add(contour);
 		}
 	}
-
-
-
-
 }
 
