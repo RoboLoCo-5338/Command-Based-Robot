@@ -21,11 +21,13 @@ public class DriveTrain extends Subsystem
     private final CANTalon DRIVER2 = new CANTalon(1);
     
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
+	
+	private double throttle;
 
 	public DriveTrain()
 	{
 		super();
-		DRIVE.setMaxOutput((1-(Robot.oi.getJoystick2().getRawAxis(2)))/2);
+		throttle = (1-(Robot.oi.getJoystick2().getRawAxis(2)))/2;
 	}
 	/**
 	 * When no other command is running let the operator drive around using the
@@ -46,7 +48,8 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double left, double right)
 	{
-		DRIVE.tankDrive(left, right, false);
+		throttle = (1-(Robot.oi.getJoystick2().getRawAxis(2)))/2;
+		DRIVE.tankDrive(throttle * left, throttle * right, false);
 	}
 	/**
 	 * @param joy
@@ -54,7 +57,8 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy1, Joystick joy2)
 	{
-		DRIVE.tankDrive(joystickDeadZone(-joy1.getRawAxis(1)), joystickDeadZone(-joy2.getRawAxis(1)), false);
+		throttle = (1-(Robot.oi.getJoystick2().getRawAxis(2)))/2;
+		DRIVE.tankDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), throttle * joystickDeadZone(joy2.getRawAxis(1)), false);
 	}
 	public double joystickDeadZone(double value)
 	{
