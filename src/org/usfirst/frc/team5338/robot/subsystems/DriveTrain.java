@@ -56,7 +56,8 @@ public class DriveTrain extends Subsystem
 	public void drive(Joystick joy1, Joystick joy2)
 	{
 		throttle = (1-(joy2.getRawAxis(2)))/2;
-		DRIVE.tankDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), throttle * joystickDeadZone(joy2.getRawAxis(1)), true);
+		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy2.getRawAxis(1)), throttle * joystickDeadZone(joy2.getRawAxis(0)), true);
+		//DRIVE.tankDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), throttle * joystickDeadZone(joy2.getRawAxis(1)), true);
 	}
 	public double joystickDeadZone(double value)
 	{
