@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.CANTalon;
@@ -22,12 +21,11 @@ public class DriveTrain extends Subsystem
     
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 	
-	private double throttle = 0.0;
+	private double throttle = 0.5;
 
 	public DriveTrain()
 	{
 		super();
-		throttle = (1-(Robot.oi.getJoystick2().getRawAxis(2)))/2;
 	}
 	/**
 	 * When no other command is running let the operator drive around using the
@@ -48,7 +46,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double left, double right)
 	{
-		throttle = (1-(Robot.oi.getJoystick2().getRawAxis(2)))/2;
+		throttle = 0.0;
 		DRIVE.tankDrive(throttle * left, throttle * right, false);
 	}
 	/**
@@ -57,18 +55,18 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy1, Joystick joy2)
 	{
-		throttle = (1-(Robot.oi.getJoystick2().getRawAxis(2)))/2;
+		throttle = (1-(joy2.getRawAxis(2)))/2;
 		DRIVE.tankDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), throttle * joystickDeadZone(joy2.getRawAxis(1)), false);
 	}
 	public double joystickDeadZone(double value)
 	{
-		if (value > 0.10 || value < -0.10)
+		if (value > 0.05 || value < -0.05)
 		{
-		 return (value - 0.10)/0.90;
+		 return (value - 0.05)/0.95;
 		}
-		else if (value < -0.10)
+		else if (value < -0.05)
 		{
-		 return (value + 0.10)/0.90;
+		 return (value + 0.05)/0.95;
 		}
 		return 0.0;
 	}
