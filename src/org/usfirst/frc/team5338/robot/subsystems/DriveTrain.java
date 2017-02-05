@@ -22,7 +22,7 @@ public class DriveTrain extends Subsystem
     
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 	
-	private double throttle;
+	private double throttle = 0.0;
 
 	public DriveTrain()
 	{
