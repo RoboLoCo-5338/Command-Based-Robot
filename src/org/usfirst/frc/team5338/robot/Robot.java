@@ -1,25 +1,21 @@
 package org.usfirst.frc.team5338.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team5338.robot.commands.Autonomous;
-import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
-
-import org.usfirst.frc.team5338.robot.GripPipeline;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.vision.VisionThread;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team5338.robot.commands.Autonomous;
+import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
