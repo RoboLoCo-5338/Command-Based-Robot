@@ -85,22 +85,8 @@ public class Robot extends IterativeRobot
 	  double sumY = 0;
 	  for(int i = 0; i < xLocations.length; ++i)
 	  {
-		  if(xLocations[i] == 0)
-		  {
-			  sumX += 0;
-		  }
-		  else
-		  {
-			  sumX += xLocations[i];
-		  }
-		  if(xLocations[i] == 0)
-		  {
-			  sumY += 0;
-		  }
-		  else
-		  {
-			  sumY += yLocations[i];
-		  }  
+		  sumX += xLocations[i];
+		  sumY += yLocations[i];
 	  }
 	  double averageX = sumX/(xLocations.length);
 	  double averageY = sumY/(yLocations.length);
