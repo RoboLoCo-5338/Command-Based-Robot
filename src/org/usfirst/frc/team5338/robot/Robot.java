@@ -2,6 +2,7 @@ package org.usfirst.frc.team5338.robot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.OptionalDouble;
 
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot
 	    
 	    new VisionThread(camera, new GripPipeline(), pipeline ->
 	    {
+	    	
 	    	 if (!pipeline.filterContoursOutput().isEmpty())
 	    	 {
 	    		 ArrayList<Rect> rects = new ArrayList<Rect>();
@@ -51,10 +53,17 @@ public class Robot extends IterativeRobot
 	    			 rects.add(Imgproc.boundingRect(mop));
 	    		 }
 	    		 ArrayList<Integer> centerX = new ArrayList<Integer>();
+	    		 ArrayList<Integer> centerY = new ArrayList<Integer>();
 	    		 for(Rect r: rects)
+	    		 {
 	    			 centerX.add(r.x + (r.width / 2));
+	    		 	 centerY.add(r.y + (r.height / 2));
+	    		 }
 	    		 Collections.sort(centerX);
-	    		 SmartDashboard.putString("tape","left: "+centerX.get(0)+", right: "+centerX.get(1));
+	    		 Collections.sort(centerY);
+	    		 OptionalDouble averageX = centerX.stream().mapToDouble(a -> a).average();
+	    		 OptionalDouble averageY = centerY.stream().mapToDouble(a -> a).average();
+	    		 SmartDashboard.putString("tape","left: "+ averageX.getAsDouble() +", right: "+ averageY.getAsDouble());
 	       	 }
 	    }).start();
 
