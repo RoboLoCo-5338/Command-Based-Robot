@@ -62,8 +62,8 @@ public class Robot extends IterativeRobot
 	    		 Collections.sort(centerX);
 	    		 Collections.sort(centerY);
 	    		 OptionalDouble averageX = centerX.stream().mapToDouble(a -> a).average();
-	    		 OptionalDouble averageY = centerY.stream().mapToDouble(a -> a).average();
-	    		 SmartDashboard.putString("tape","left: "+ averageX.getAsDouble() +", right: "+ averageY.getAsDouble());
+	    		 OptionalDouble averageY = centerY.stream().mapToDouble(a -> a).average();	 
+	    		 SmartDashboard.putString("tape","X: "+ String.format("%.2f", averageX.getAsDouble()) +", Y: "+ String.format("%.2f", averageY.getAsDouble()));
 	       	 }
 	    }).start();
 
