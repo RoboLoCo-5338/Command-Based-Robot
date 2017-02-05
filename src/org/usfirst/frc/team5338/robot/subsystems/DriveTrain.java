@@ -44,20 +44,19 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double left, double right)
+	public void drive(double forward, double rotation)
 	{
 		throttle = 0.0;
-		DRIVE.tankDrive(throttle * left, throttle * right, true);
+		DRIVE.tankDrive(throttle * forward, throttle * rotation, true);
 	}
 	/**
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.
 	 */
-	public void drive(Joystick joy1, Joystick joy2)
+	public void drive(Joystick joy1)
 	{
-		throttle = (1-(joy2.getRawAxis(2)))/2;
-		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy2.getRawAxis(1)), -throttle * joystickDeadZone(joy2.getRawAxis(0)), true);
-		//DRIVE.tankDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), throttle * joystickDeadZone(joy2.getRawAxis(1)), true);
+		throttle = (1-(joy1.getRawAxis(2)))/2;
+		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), true);
 	}
 	public double joystickDeadZone(double value)
 	{
