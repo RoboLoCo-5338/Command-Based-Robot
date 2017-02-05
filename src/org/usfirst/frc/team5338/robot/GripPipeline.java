@@ -1,5 +1,3 @@
-package org.usfirst.frc.team5338.robot;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,21 +23,17 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline implements VisionPipeline
-{
+public class GripPipeline implements VisionPipeline {
 
 	//Outputs
 	private Mat resizeImageOutput = new Mat();
 	private Mat blurOutput = new Mat();
 	private Mat hslThresholdOutput = new Mat();
-	private Mat maskOutput = new Mat();
-	private Mat rgbThresholdOutput = new Mat();
 	private Mat cvCannyOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
-	static
-	{
+	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
 
@@ -49,42 +43,30 @@ public class GripPipeline implements VisionPipeline
 	@Override	public void process(Mat source0) {
 		// Step Resize_Image0:
 		Mat resizeImageInput = source0;
-		double resizeImageWidth = 320.0;
-		double resizeImageHeight = 240.0;
-		int resizeImageInterpolation = Imgproc.INTER_CUBIC;
+		double resizeImageWidth = 640.0;
+		double resizeImageHeight = 360.0;
+		int resizeImageInterpolation = Imgproc.INTER_LANCZOS4;
 		resizeImage(resizeImageInput, resizeImageWidth, resizeImageHeight, resizeImageInterpolation, resizeImageOutput);
 
 		// Step Blur0:
 		Mat blurInput = resizeImageOutput;
 		BlurType blurType = BlurType.get("Box Blur");
-		double blurRadius = 3.6036036036036037;
+		double blurRadius = 10.81081081081081;
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSL_Threshold0:
 		Mat hslThresholdInput = blurOutput;
-		double[] hslThresholdHue = {27.51798561151079, 63.333333333333336};
-		double[] hslThresholdSaturation = {0.0, 255.0};
-		double[] hslThresholdLuminance = {231.60971223021582, 255.0};
+		double[] hslThresholdHue = {9.712230215827338, 95.15151515151514};
+		double[] hslThresholdSaturation = {25.22482014388489, 255.0};
+		double[] hslThresholdLuminance = {199.50539568345323, 255.0};
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
-		// Step Mask0:
-		Mat maskInput = blurOutput;
-		Mat maskMask = hslThresholdOutput;
-		mask(maskInput, maskMask, maskOutput);
-
-		// Step RGB_Threshold0:
-		Mat rgbThresholdInput = maskOutput;
-		double[] rgbThresholdRed = {208.67805755395685, 255.0};
-		double[] rgbThresholdGreen = {249.955035971223, 255.0};
-		double[] rgbThresholdBlue = {217.85071942446044, 255.0};
-		rgbThreshold(rgbThresholdInput, rgbThresholdRed, rgbThresholdGreen, rgbThresholdBlue, rgbThresholdOutput);
-
 		// Step CV_Canny0:
-		Mat cvCannyImage = rgbThresholdOutput;
+		Mat cvCannyImage = hslThresholdOutput;
 		double cvCannyThreshold1 = 0.0;
 		double cvCannyThreshold2 = 0.0;
 		double cvCannyAperturesize = 3.0;
-		boolean cvCannyL2gradient = false;
+		boolean cvCannyL2gradient = true;
 		cvCanny(cvCannyImage, cvCannyThreshold1, cvCannyThreshold2, cvCannyAperturesize, cvCannyL2gradient, cvCannyOutput);
 
 		// Step Find_Contours0:
@@ -94,26 +76,26 @@ public class GripPipeline implements VisionPipeline
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 0;
-		double filterContoursMinPerimeter = 0;
-		double filterContoursMinWidth = 20.0;
-		double filterContoursMaxWidth = 51.0;
+		double filterContoursMinArea = 0.0;
+		double filterContoursMinPerimeter = 0.0;
+		double filterContoursMinWidth = 12.0;
+		double filterContoursMaxWidth = 100.0;
 		double filterContoursMinHeight = 50.0;
-		double filterContoursMaxHeight = 84.0;
-		double[] filterContoursSolidity = {0.0, 99.90197994682406};
-		double filterContoursMaxVertices = 60.0;
-		double filterContoursMinVertices = 0;
+		double filterContoursMaxHeight = 300.0;
+		double[] filterContoursSolidity = {0.0, 100.0};
+		double filterContoursMaxVertices = 1000000.0;
+		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 3.0;
+		double filterContoursMaxRatio = 10.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
+
 	}
 
 	/**
 	 * This method is a generated getter for the output of a Resize_Image.
 	 * @return Mat output from Resize_Image.
 	 */
-	public Mat resizeImageOutput()
-	{
+	public Mat resizeImageOutput() {
 		return resizeImageOutput;
 	}
 
@@ -121,8 +103,7 @@ public class GripPipeline implements VisionPipeline
 	 * This method is a generated getter for the output of a Blur.
 	 * @return Mat output from Blur.
 	 */
-	public Mat blurOutput()
-	{
+	public Mat blurOutput() {
 		return blurOutput;
 	}
 
@@ -130,35 +111,15 @@ public class GripPipeline implements VisionPipeline
 	 * This method is a generated getter for the output of a HSL_Threshold.
 	 * @return Mat output from HSL_Threshold.
 	 */
-	public Mat hslThresholdOutput()
-	{
+	public Mat hslThresholdOutput() {
 		return hslThresholdOutput;
-	}
-
-	/**
-	 * This method is a generated getter for the output of a Mask.
-	 * @return Mat output from Mask.
-	 */
-	public Mat maskOutput()
-	{
-		return maskOutput;
-	}
-
-	/**
-	 * This method is a generated getter for the output of a RGB_Threshold.
-	 * @return Mat output from RGB_Threshold.
-	 */
-	public Mat rgbThresholdOutput()
-	{
-		return rgbThresholdOutput;
 	}
 
 	/**
 	 * This method is a generated getter for the output of a CV_Canny.
 	 * @return Mat output from CV_Canny.
 	 */
-	public Mat cvCannyOutput()
-	{
+	public Mat cvCannyOutput() {
 		return cvCannyOutput;
 	}
 
@@ -166,8 +127,7 @@ public class GripPipeline implements VisionPipeline
 	 * This method is a generated getter for the output of a Find_Contours.
 	 * @return ArrayList<MatOfPoint> output from Find_Contours.
 	 */
-	public ArrayList<MatOfPoint> findContoursOutput()
-	{
+	public ArrayList<MatOfPoint> findContoursOutput() {
 		return findContoursOutput;
 	}
 
@@ -175,8 +135,7 @@ public class GripPipeline implements VisionPipeline
 	 * This method is a generated getter for the output of a Filter_Contours.
 	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
 	 */
-	public ArrayList<MatOfPoint> filterContoursOutput()
-	{
+	public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
 	}
 
@@ -190,8 +149,7 @@ public class GripPipeline implements VisionPipeline
 	 * @param output The image in which to store the output.
 	 */
 	private void resizeImage(Mat input, double width, double height,
-		int interpolation, Mat output)
-	{
+		int interpolation, Mat output) {
 		Imgproc.resize(input, output, new Size(width, height), 0.0, 0.0, interpolation);
 	}
 
@@ -205,34 +163,27 @@ public class GripPipeline implements VisionPipeline
 
 		private final String label;
 
-		BlurType(String label)
-		{
+		BlurType(String label) {
 			this.label = label;
 		}
 
-		public static BlurType get(String type)
-		{
-			if (BILATERAL.label.equals(type)) 
-			{
+		public static BlurType get(String type) {
+			if (BILATERAL.label.equals(type)) {
 				return BILATERAL;
 			}
-			else if (GAUSSIAN.label.equals(type))
-			{
+			else if (GAUSSIAN.label.equals(type)) {
 			return GAUSSIAN;
 			}
-			else if (MEDIAN.label.equals(type))
-			{
+			else if (MEDIAN.label.equals(type)) {
 				return MEDIAN;
 			}
-			else
-			{
+			else {
 				return BOX;
 			}
 		}
 
 		@Override
-		public String toString()
-		{
+		public String toString() {
 			return this.label;
 		}
 	}
@@ -281,33 +232,6 @@ public class GripPipeline implements VisionPipeline
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HLS);
 		Core.inRange(out, new Scalar(hue[0], lum[0], sat[0]),
 			new Scalar(hue[1], lum[1], sat[1]), out);
-	}
-
-	/**
-	 * Filter out an area of an image using a binary mask.
-	 * @param input The image on which the mask filters.
-	 * @param mask The binary image that is used to filter.
-	 * @param output The image in which to store the output.
-	 */
-	private void mask(Mat input, Mat mask, Mat output) {
-		mask.convertTo(mask, CvType.CV_8UC1);
-		Core.bitwise_xor(output, output, output);
-		input.copyTo(output, mask);
-	}
-
-	/**
-	 * Segment an image based on color ranges.
-	 * @param input The image on which to perform the RGB threshold.
-	 * @param red The min and max red.
-	 * @param green The min and max green.
-	 * @param blue The min and max blue.
-	 * @param output The image in which to store the output.
-	 */
-	private void rgbThreshold(Mat input, double[] red, double[] green, double[] blue,
-		Mat out) {
-		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2RGB);
-		Core.inRange(out, new Scalar(red[0], green[0], blue[0]),
-			new Scalar(red[1], green[1], blue[1]), out);
 	}
 
 	/**
