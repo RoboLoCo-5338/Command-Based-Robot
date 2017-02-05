@@ -34,7 +34,6 @@ public class Robot extends IterativeRobot
 	public static final OI oi = new OI();
 	
 	private static double[] xLocations = new double[8];
-	private static double[] yLocations = new double[8];
 	private static int counter = 7;
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -58,41 +57,22 @@ public class Robot extends IterativeRobot
 	    			 rects.add(Imgproc.boundingRect(mop));
 	    		 }
 	    		 ArrayList<Integer> centerX = new ArrayList<Integer>();
-	    		 ArrayList<Integer> centerY = new ArrayList<Integer>();
 	    		 for(Rect r: rects)
 	    		 {
 	    			 centerX.add(r.x + (r.width / 2));
-	    		 	 centerY.add(r.y + (r.height / 2));
 	    		 }
 	    		 Collections.sort(centerX);
-	    		 Collections.sort(centerY);
 	    		 OptionalDouble averageX = centerX.stream().mapToDouble(a -> a).average();
-	    		 OptionalDouble averageY = centerY.stream().mapToDouble(a -> a).average();	 
 	    		 
-	    		 xLocations[counter] = averageX.getAsDouble();
-	    		 yLocations[counter] = averageY.getAsDouble(); 
+	    		 xLocations[counter] = averageX.getAsDouble(); 
 	    		 counter--;
 	    		 if(counter == -1)
 	    		 {
 	    			 counter = 7;
 	    		 }
+	    		 
 	    	 }
 	    }).start();
-	  Arrays.parallelSort(xLocations);
-	  Arrays.parallelSort(yLocations);
-	  
-	  double sumX = 0;
-	  double sumY = 0;
-	  for(int i = 0; i < xLocations.length; ++i)
-	  {
-		  sumX += xLocations[i];
-		  sumY += yLocations[i];
-	  }
-	  double averageX = sumX/(xLocations.length);
-	  double averageY = sumY/(yLocations.length);
-	  
-	  SmartDashboard.putString("tape","X: "+ String.format("%.2f", averageX) +", Y: "+ String.format("%.2f", averageY));
-
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
 	}
@@ -124,6 +104,17 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic()
 	{
+		  Arrays.parallelSort(xLocations);
+		  SmartDashboard.putString("Array", Arrays.toString(xLocations));
+		  
+		  double sumX = 0;
+		  for(int i = 0; i < xLocations.length; ++i)
+		  {
+			  sumX += xLocations[i];
+		  }
+		  double averageX = sumX/(xLocations.length);
+		  
+		  SmartDashboard.putString("X Coordinate:", String.format("%.3f", averageX));
 		Scheduler.getInstance().run();
 	}
 }
