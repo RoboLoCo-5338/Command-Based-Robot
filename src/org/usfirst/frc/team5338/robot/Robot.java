@@ -1,9 +1,9 @@
 package org.usfirst.frc.team5338.robot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.OptionalDouble;
-
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
@@ -29,9 +29,13 @@ public class Robot extends IterativeRobot
 	Command autonomousCommand;
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 360;
-
-	public static DriveTrain drivetrain;
-	public static OI oi;
+	
+	public static final DriveTrain drivetrain = new DriveTrain();
+	public static final OI oi = new OI();
+	
+	private static double[] xLocations = new double[8];
+	private static double[] yLocations = new double[8];
+	private static int counter = 7;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -47,6 +51,7 @@ public class Robot extends IterativeRobot
 	    	
 	    	 if (!pipeline.filterContoursOutput().isEmpty())
 	    	 {
+	    		 
 	    		 ArrayList<Rect> rects = new ArrayList<Rect>();
 	    		 for(MatOfPoint mop: pipeline.filterContoursOutput())
 	    		 {
@@ -63,12 +68,44 @@ public class Robot extends IterativeRobot
 	    		 Collections.sort(centerY);
 	    		 OptionalDouble averageX = centerX.stream().mapToDouble(a -> a).average();
 	    		 OptionalDouble averageY = centerY.stream().mapToDouble(a -> a).average();	 
-	    		 SmartDashboard.putString("tape","X: "+ String.format("%.2f", averageX.getAsDouble()) +", Y: "+ String.format("%.2f", averageY.getAsDouble()));
-	       	 }
+	    		 
+	    		 xLocations[counter] = averageX.getAsDouble();
+	    		 yLocations[counter] = averageY.getAsDouble(); 
+	    		 counter--;
+	    		 if(counter == -1)
+	    		 {
+	    			 counter = 7;
+	    		 }
+	    	 }
 	    }).start();
-
-	    drivetrain = new DriveTrain();
-		oi = new OI();
+	  Arrays.parallelSort(xLocations);
+	  Arrays.parallelSort(yLocations);
+	  
+	  double sumX = 0;
+	  double sumY = 0;
+	  for(int i = 0; i < xLocations.length; ++i)
+	  {
+		  if(xLocations[i] == 0)
+		  {
+			  sumX += 0;
+		  }
+		  else
+		  {
+			  sumX += xLocations[i];
+		  }
+		  if(xLocations[i] == 0)
+		  {
+			  sumY += 0;
+		  }
+		  else
+		  {
+			  sumY += yLocations[i];
+		  }  
+	  }
+	  double averageX = sumX/(xLocations.length);
+	  double averageY = sumY/(yLocations.length);
+	  
+	  SmartDashboard.putString("tape","X: "+ String.format("%.2f", averageX) +", Y: "+ String.format("%.2f", averageY));
 
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
