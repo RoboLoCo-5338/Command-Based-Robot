@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.usfirst.frc.team5338.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team5338.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Have the robot drive tank style using the two Joysticks until interrupted.
