@@ -17,7 +17,7 @@ public class TankDriveWithJoysticks extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.drive(Robot.oi.getJoystick1(), Robot.oi.getJoystick2());
+		Robot.drivetrain.drive(Robot.oi.getJoystick());
 	}
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
