@@ -33,9 +33,13 @@ public class Robot extends IterativeRobot
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 	
-	private static double[] xLocations = new double[8];
-	private static int counter = 0;
 	private final Object imgLock = new Object();
+	
+	private static ArrayList<Rect> raw;
+	private static ArrayList<Double> processedData;
+	
+    VisionThread visionThread;
+
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -47,7 +51,7 @@ public class Robot extends IterativeRobot
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 	    camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	    
-	    new VisionThread(camera, new GripPipeline(), pipeline ->
+	    visionThread = new VisionThread(camera, new GripPipeline(), pipeline ->
 	    {
 	    	
 	    	 if (!pipeline.filterContoursOutput().isEmpty())
@@ -63,19 +67,16 @@ public class Robot extends IterativeRobot
 	    		 {
 	    			 centerX.add(r.x + (r.width / 2));
 	    		 }
-	    		 Collections.sort(centerX);
-	    		 OptionalDouble averageX = centerX.stream().mapToDouble(a -> a).average();
-	    		 counter++;
-	    		 if(counter == 8)
-	    		 {
-	    			 counter = 0;
-	    		 }
+//	    		 Collections.sort(centerX);
+//	    		 OptionalDouble averageX = centerX.stream().mapToDouble(a -> a).average();
 	    		 synchronized (imgLock)
 	    		 {
-	    			 xLocations[counter] = averageX.getAsDouble();
+	    			 processedData = new ArrayList<Double>();
+	    			 raw = new ArrayList<Rect>(rects);
 	             }
 	    	 }
-	    }).start();
+	    });
+	    visionThread.start();
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
 	}
@@ -92,35 +93,24 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 	}
+	
 	@Override
 	public void teleopInit()
 	{
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		autonomousCommand.cancel();
 	}
-	/**
-	 * This function is called periodically during operator control
-	 */
+
 	@Override
 	public void teleopPeriodic()
 	{
-		/*double[] xLocations;
+		String rawString;
 		synchronized (imgLock) 
 		{
-			xLocations = Robot.xLocations;
+			rawString = "";
+			for(Rect i: raw)
+				rawString = rawString + i.toString()+"    ";
+			SmartDashboard.putString("raw data", rawString);
 		}
-		Arrays.parallelSort(xLocations);
-		SmartDashboard.putString("Array", Arrays.toString(xLocations));
-		double sumX = 0;
-		for(int i = 0; i < xLocations.length; i++)
-		{
-			sumX = sumX + xLocations[i];
-		}
-		double averageX = sumX/(xLocations.length);
-		SmartDashboard.putString("X Coordinate:", String.format("%.3f", averageX));*/
 		Scheduler.getInstance().run();
 	}
 }
