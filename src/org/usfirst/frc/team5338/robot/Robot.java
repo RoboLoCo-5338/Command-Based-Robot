@@ -1,10 +1,6 @@
 package org.usfirst.frc.team5338.robot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.OptionalDouble;
-//
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
@@ -34,16 +30,16 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 
-	private final Object imgLock = new Object();
-
-	private static ArrayList<Rect> raw;
-	private static long time, oldTime;
-
-	private static Snapshot lastObserved;
-	
-	private Relay bestrelay = new Relay(1);
-
-	VisionThread visionThread;
+//	private final Object imgLock = new Object();
+//
+//	private static ArrayList<Rect> raw;
+//	private static long time, oldTime;
+//
+//	private static Snapshot lastObserved;
+//	
+//	private Relay bestrelay = new Relay(1);
+//
+//	VisionThread visionThread;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -51,39 +47,39 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		lastObserved = new Snapshot(0, 0, 0, 0);
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-
-		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-			ArrayList<Rect> rects = new ArrayList<Rect>();
-			for (MatOfPoint mop : pipeline.filterContoursOutput()) {
-				rects.add(Imgproc.boundingRect(mop));
-			}
-			oldTime = lastObserved.time;
-			time = System.currentTimeMillis();
-
-			if (!pipeline.filterContoursOutput().isEmpty()) {
-
-				ArrayList<Integer> centerX = new ArrayList<Integer>();
-				for (Rect r : rects) {
-					centerX.add(r.x + (r.width / 2));
-				}
-			} else {
-				//no rectangles visible... use lastObserved if it isn't too old
-			}
-			if (time - oldTime < 200) {
-				//use lastObserved to help determine the new position
-			} else {
-				//determine position with rectangle data only
-			}
-			synchronized (imgLock) {
-				lastObserved = new Snapshot(time, 0/*center x of both tapes*/, 0/*center y, not really important*/, 0/*width between the tapes*/);
-				raw = new ArrayList<Rect>(rects);
-			}
-
-		});
-		visionThread.start();
+//		lastObserved = new Snapshot(0, 0, 0, 0);
+//		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+//		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+//
+//		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+//			ArrayList<Rect> rects = new ArrayList<Rect>();
+//			for (MatOfPoint mop : pipeline.filterContoursOutput()) {
+//				rects.add(Imgproc.boundingRect(mop));
+//			}
+//			oldTime = lastObserved.time;
+//			time = System.currentTimeMillis();
+//
+//			if (!pipeline.filterContoursOutput().isEmpty()) {
+//
+//				ArrayList<Integer> centerX = new ArrayList<Integer>();
+//				for (Rect r : rects) {
+//					centerX.add(r.x + (r.width / 2));
+//				}
+//			} else {
+//				//no rectangles visible... use lastObserved if it isn't too old
+//			}
+//			if (time - oldTime < 200) {
+//				//use lastObserved to help determine the new position
+//			} else {
+//				//determine position with rectangle data only
+//			}
+//			synchronized (imgLock) {
+//				lastObserved = new Snapshot(time, 0/*center x of both tapes*/, 0/*center y, not really important*/, 0/*width between the tapes*/);
+//				raw = new ArrayList<Rect>(rects);
+//			}
+//
+//		});
+//		visionThread.start();
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
 	}
@@ -104,33 +100,31 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		autonomousCommand.cancel();
-		bestrelay.set(Relay.Value.kForward);
+		//bestrelay.set(Relay.Value.kForward);
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		String rawString;
-		synchronized (imgLock) {
-			rawString = "";
-			for (Rect i : raw)
-				rawString = rawString + i.toString() + "    ";
-			SmartDashboard.putString("raw data", rawString);
-		}
+//		String rawString;
+//		synchronized (imgLock) {
+//			rawString = "";
+//			for (Rect i : raw)
+//				rawString = rawString + i.toString() + "    ";
+//			SmartDashboard.putString("raw data", rawString);
+//		}
 		Scheduler.getInstance().run();
 	}
 
-	private class Snapshot {
-		public long time;
-		public double x;
-		public double y;
-		public double width;
-
-		public Snapshot(long time, double x, double y, double width) {
-			this.time = time;
-			this.x = x;
-			this.y = y;
-			this.width = width;
-		}
+//	private class Snapshot {
+//		public long time;
+//		public double x;
+//		public double y;
+//		public double width;
+//
+//		public Snapshot(long time, double x, double y, double width) {
+//			this.time = time;
+//			this.x = x;
+//			this.y = y;
+//			this.width = width;
+//		}
 	}
-
-}
