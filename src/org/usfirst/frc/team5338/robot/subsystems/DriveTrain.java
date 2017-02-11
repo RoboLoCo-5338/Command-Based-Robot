@@ -47,7 +47,7 @@ public class DriveTrain extends Subsystem
 	public void drive(double forward, double rotation)
 	{
 		throttle = 0.0;
-		DRIVE.tankDrive(throttle * forward, throttle * rotation, true);
+		DRIVE.tankDrive(throttle * forward, throttle * rotation, false);
 	}
 	/**
 	 * @param joy
@@ -56,17 +56,17 @@ public class DriveTrain extends Subsystem
 	public void drive(Joystick joy1)
 	{
 		throttle = (1-(joy1.getRawAxis(2)))/2;
-		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), true);
+		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)
 	{
-		if (value > 0.10 || value < -0.10)
+		if (value > 0.05 || value < -0.05)
 		{
-		 return (value - 0.10)/0.90;
+		 return (value - 0.05)/0.95;
 		}
-		else if (value < -0.10)
+		else if (value < -0.05)
 		{
-		 return (value + 0.10)/0.90;
+		 return (value + 0.05)/0.95;
 		}
 		return 0.0;
 	}
