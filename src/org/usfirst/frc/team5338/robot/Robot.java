@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
+import edu.wpi.first.wpilibj.Relay;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +40,8 @@ public class Robot extends IterativeRobot {
 	private static long time, oldTime;
 
 	private static Snapshot lastObserved;
+	
+	private Relay bestrelay = new Relay(1);
 
 	VisionThread visionThread;
 
@@ -101,6 +104,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		autonomousCommand.cancel();
+		bestrelay.set(Relay.Value.kForward);
 	}
 
 	@Override
