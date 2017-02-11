@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 //
 //	private static Snapshot lastObserved;
 //	
-//	private Relay bestrelay = new Relay(1);
+	private Relay bestrelay = new Relay(1);
 //
 //	VisionThread visionThread;
 
@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		autonomousCommand.cancel();
-		//bestrelay.set(Relay.Value.kForward);
+		bestrelay.set(Relay.Value.kForward);
 	}
 
 	@Override
