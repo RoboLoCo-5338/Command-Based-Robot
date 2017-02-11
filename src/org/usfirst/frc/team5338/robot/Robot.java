@@ -112,6 +112,7 @@ public class Robot extends IterativeRobot {
 //				rawString = rawString + i.toString() + "    ";
 //			SmartDashboard.putString("raw data", rawString);
 //		}
+		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}
 

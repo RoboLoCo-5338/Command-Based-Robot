@@ -27,7 +27,6 @@ public class DriveTrain extends Subsystem
 	public DriveTrain()
 	{
 		super();
-		SmartDashboard.putNumber("Throttle", throttle);
 	}
 	/**
 	 * When no other command is running let the operator drive around using the
@@ -49,7 +48,6 @@ public class DriveTrain extends Subsystem
 	public void drive(double forward, double rotation)
 	{
 		throttle = 0.0;
-		SmartDashboard.putNumber("Throttle", throttle);
 		DRIVE.tankDrive(throttle * forward, throttle * rotation, false);
 	}
 	/**
@@ -59,7 +57,7 @@ public class DriveTrain extends Subsystem
 	public void drive(Joystick joy1)
 	{
 		throttle = (1-(joy1.getRawAxis(2)))/2;
-		SmartDashboard.putNumber("Throttle", throttle);
+
 		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)
@@ -73,5 +71,9 @@ public class DriveTrain extends Subsystem
 		 return (value + 0.05)/0.95;
 		}
 		return 0.0;
+	}
+	public double getThrottle()
+	{
+		return throttle;
 	}
 }
