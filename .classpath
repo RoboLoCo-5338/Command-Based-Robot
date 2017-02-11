@@ -3,6 +3,7 @@
 	<classpathentry exported="true" kind="var" path="wpilib"/>
 	<classpathentry exported="true" kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="jetson/src"/>
 	<classpathentry kind="var" path="networktables"/>
 	<classpathentry kind="var" path="opencv"/>
 	<classpathentry kind="var" path="cscore"/>
