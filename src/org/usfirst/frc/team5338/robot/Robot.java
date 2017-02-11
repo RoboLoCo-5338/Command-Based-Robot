@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.Relay;
@@ -24,8 +25,8 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
-	private static final int IMG_WIDTH = 640;
-	private static final int IMG_HEIGHT = 360;
+	private static final int IMG_WIDTH = 1280;
+	private static final int IMG_HEIGHT = 720;
 
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
@@ -37,7 +38,8 @@ public class Robot extends IterativeRobot {
 //
 //	private static Snapshot lastObserved;
 //	
-	private Relay bestrelay = new Relay(1);
+	private Relay light = new Relay(1);
+	private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
 //
 //	VisionThread visionThread;
 
@@ -100,7 +102,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		autonomousCommand.cancel();
-		bestrelay.set(Relay.Value.kForward);
+		light.set(Relay.Value.kForward);
 	}
 
 	@Override
