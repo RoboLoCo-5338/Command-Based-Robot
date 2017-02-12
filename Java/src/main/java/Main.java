@@ -1,10 +1,15 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import edu.wpi.first.wpilibj.networktables.*;
 import edu.wpi.first.wpilibj.tables.*;
 import edu.wpi.cscore.*;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team5338.robot.GripPipeline;
 
 public class Main {
   public static void main(String[] args) {
@@ -60,8 +65,9 @@ public class Main {
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
-    camera.setResolution(640,360);
-    
+    camera.setResolution(1280,720);
+	camera.setExposureManual(25);
+	camera.setWhiteBalanceManual(0);    
 
     // This creates a CvSink for us to use. This grabs images from our selected camera, 
     // and will allow us to use those images in opencv
@@ -78,6 +84,8 @@ public class Main {
     // as they are expensive to create
     Mat inputImage = new Mat();
     Mat hsv = new Mat();
+    
+    GripPipeline gp = new GripPipeline();
 
     // Infinitely process image
     while (true) {
@@ -85,10 +93,34 @@ public class Main {
       // Just skip and continue
       long frameTime = imageSink.grabFrame(inputImage);
       if (frameTime == 0) continue;
+      
+      gp.process(inputImage);
+      
+      ArrayList<MatOfPoint> fCO = gp.findContoursOutput();
+      
+		ArrayList<Rect> rects = new ArrayList<Rect>();
+		for (MatOfPoint mop : fCO)
+				rects.add(Imgproc.boundingRect(mop));
+		
+		//remove duplicates
+		Set<Rect> hs = new HashSet<>();
+		hs.addAll(rects);
+		rects.clear();
+		rects.addAll(hs);
+		
+		//remove rectangles that aren't the right size
+		for(int i=0;i<rects.size();i++)
+		{
+			Rect r = rects.get(i);
+			if((Math.abs(2.5 - r.height / (float)r.width)>0.5) && (r.y)> 1 )
+			{
+				rects.remove(i);
+				i--;
+			}
+		}
 
       // Below is where you would do your OpenCV operations on the provided image
       // The sample below just changes color source to HSV
-      Imgproc.cvtColor(inputImage, hsv, Imgproc.COLOR_BGR2HSV);
 
       // Here is where you would write a processed image that you want to restreams
       // This will most likely be a marked up image of what the camera sees

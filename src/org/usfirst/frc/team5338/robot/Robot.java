@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5338.robot;
 
-import java.util.ArrayList;
+import java.util.*;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
@@ -39,6 +39,9 @@ public class Robot extends IterativeRobot {
 	private static Snapshot lastObserved, observed;
 	
 	private Relay light = new Relay(1);
+	
+	public static Snapshot outputSnapshot;
+
 	//private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
 
 	VisionThread visionThread;
@@ -65,6 +68,13 @@ public class Robot extends IterativeRobot {
 			for (MatOfPoint mop : pipeline.findContoursOutput())
 					rects.add(Imgproc.boundingRect(mop));
 			
+			//remove duplicates
+			Set<Rect> hs = new HashSet<>();
+			hs.addAll(rects);
+			rects.clear();
+			rects.addAll(hs);
+			
+			//remove rectangles that aren't the right size
 			for(int i=0;i<rects.size();i++)
 			{
 				Rect r = rects.get(i);
@@ -74,20 +84,24 @@ public class Robot extends IterativeRobot {
 					i--;
 				}
 			}
+			
+			
 
-			if (rects.isEmpty()) {
-
-				ArrayList<Integer> centerX = new ArrayList<Integer>();
-				for (Rect r : rects) {
-					centerX.add(r.x + (r.width / 2));
-				}
+			if (!rects.isEmpty()) {
 				
-				if (time - oldTime < 200) {
+				if(rects.size()==2) {
+					Rect r1 = rects.get(0);
+					Rect r2 = rects.get(1);
+					
+					observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
+				} else if (time - oldTime < 200) {
 					//use lastObserved to help determine the new position
+					//TODO 1 or >3 rectangles
 					observed = new Snapshot(0,0,0,0);
 
 				} else {
 					//determine position with rectangle data only
+					//TODO 1 or >3 rectangles
 					observed = new Snapshot(0,0,0,0);
 
 				}
@@ -132,14 +146,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		String rawString;
-		Snapshot outputSnapshot;
 		synchronized (imgLock) {
 			outputSnapshot = lastObserved;
 			rawString = "";
 			for (Rect i : raw)
 				rawString = rawString + i.toString() + "    ";
 		}
-		SmartDashboard.putNumber("T",outputSnapshot.time);
 		SmartDashboard.putNumber("X",outputSnapshot.x);
 		SmartDashboard.putNumber("Y",outputSnapshot.y);
 		SmartDashboard.putNumber("Z",outputSnapshot.width);
@@ -148,17 +160,4 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 
-	private class Snapshot {
-		public long time;
-		public double x;
-		public double y;
-		public double width;
-
-		public Snapshot(long time, double x, double y, double width) {
-			this.time = time;
-			this.x = x;
-			this.y = y;
-			this.width = width;
-		}
-	}
 }

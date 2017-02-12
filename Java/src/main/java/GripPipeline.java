@@ -1,5 +1,3 @@
-package main.java;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,6 +26,7 @@ import org.opencv.objdetect.*;
 public class GripPipeline implements VisionPipeline {
 
 	//Outputs
+	private Mat blurOutput = new Mat();
 	private Mat hslThresholdOutput = new Mat();
 	private Mat cvCannyOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
@@ -40,11 +39,17 @@ public class GripPipeline implements VisionPipeline {
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
 	@Override	public void process(Mat source0) {
+		// Step Blur0:
+		Mat blurInput = source0;
+		BlurType blurType = BlurType.get("Box Blur");
+		double blurRadius = 2.7027027027027026;
+		blur(blurInput, blurType, blurRadius, blurOutput);
+
 		// Step HSL_Threshold0:
-		Mat hslThresholdInput = source0;
-		double[] hslThresholdHue = {74.46043165467627, 99.69696969696969};
-		double[] hslThresholdSaturation = {227.4820143884892, 255.0};
-		double[] hslThresholdLuminance = {134.4694244604317, 255.0};
+		Mat hslThresholdInput = blurOutput;
+		double[] hslThresholdHue = {64.74820143884891, 96.66666666666666};
+		double[] hslThresholdSaturation = {220.14388489208636, 255.0};
+		double[] hslThresholdLuminance = {94.01978417266189, 179.87373737373738};
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
 		// Step CV_Canny0:
@@ -60,6 +65,14 @@ public class GripPipeline implements VisionPipeline {
 		boolean findContoursExternalOnly = false;
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
+	}
+
+	/**
+	 * This method is a generated getter for the output of a Blur.
+	 * @return Mat output from Blur.
+	 */
+	public Mat blurOutput() {
+		return blurOutput;
 	}
 
 	/**
@@ -86,6 +99,71 @@ public class GripPipeline implements VisionPipeline {
 		return findContoursOutput;
 	}
 
+
+	/**
+	 * An indication of which type of filter to use for a blur.
+	 * Choices are BOX, GAUSSIAN, MEDIAN, and BILATERAL
+	 */
+	enum BlurType{
+		BOX("Box Blur"), GAUSSIAN("Gaussian Blur"), MEDIAN("Median Filter"),
+			BILATERAL("Bilateral Filter");
+
+		private final String label;
+
+		BlurType(String label) {
+			this.label = label;
+		}
+
+		public static BlurType get(String type) {
+			if (BILATERAL.label.equals(type)) {
+				return BILATERAL;
+			}
+			else if (GAUSSIAN.label.equals(type)) {
+			return GAUSSIAN;
+			}
+			else if (MEDIAN.label.equals(type)) {
+				return MEDIAN;
+			}
+			else {
+				return BOX;
+			}
+		}
+
+		@Override
+		public String toString() {
+			return this.label;
+		}
+	}
+
+	/**
+	 * Softens an image using one of several filters.
+	 * @param input The image on which to perform the blur.
+	 * @param type The blurType to perform.
+	 * @param doubleRadius The radius for the blur.
+	 * @param output The image in which to store the output.
+	 */
+	private void blur(Mat input, BlurType type, double doubleRadius,
+		Mat output) {
+		int radius = (int)(doubleRadius + 0.5);
+		int kernelSize;
+		switch(type){
+			case BOX:
+				kernelSize = 2 * radius + 1;
+				Imgproc.blur(input, output, new Size(kernelSize, kernelSize));
+				break;
+			case GAUSSIAN:
+				kernelSize = 6 * radius + 1;
+				Imgproc.GaussianBlur(input,output, new Size(kernelSize, kernelSize), radius);
+				break;
+			case MEDIAN:
+				kernelSize = 2 * radius + 1;
+				Imgproc.medianBlur(input, output, kernelSize);
+				break;
+			case BILATERAL:
+				Imgproc.bilateralFilter(input, output, -1, radius, radius);
+				break;
+		}
+	}
 
 	/**
 	 * Segment an image based on hue, saturation, and luminance ranges.
