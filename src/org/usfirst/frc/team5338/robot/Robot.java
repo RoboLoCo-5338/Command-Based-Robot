@@ -31,17 +31,17 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 
-//	private final Object imgLock = new Object();
-//
-//	private static ArrayList<Rect> raw;
-//	private static long time, oldTime;
-//
-//	private static Snapshot lastObserved;
-//	
+	private final Object imgLock = new Object();
+
+	private static ArrayList<Rect> raw;
+	private static long time, oldTime;
+
+	private static Snapshot lastObserved, observed;
+	
 	private Relay light = new Relay(1);
-	private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
-//
-//	VisionThread visionThread;
+	//private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
+
+	VisionThread visionThread;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -49,39 +49,63 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-//		lastObserved = new Snapshot(0, 0, 0, 0);
-//		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-//		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//
-//		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-//			ArrayList<Rect> rects = new ArrayList<Rect>();
-//			for (MatOfPoint mop : pipeline.filterContoursOutput()) {
-//				rects.add(Imgproc.boundingRect(mop));
-//			}
-//			oldTime = lastObserved.time;
-//			time = System.currentTimeMillis();
-//
-//			if (!pipeline.filterContoursOutput().isEmpty()) {
-//
-//				ArrayList<Integer> centerX = new ArrayList<Integer>();
-//				for (Rect r : rects) {
-//					centerX.add(r.x + (r.width / 2));
-//				}
-//			} else {
-//				//no rectangles visible... use lastObserved if it isn't too old
-//			}
-//			if (time - oldTime < 200) {
-//				//use lastObserved to help determine the new position
-//			} else {
-//				//determine position with rectangle data only
-//			}
-//			synchronized (imgLock) {
-//				lastObserved = new Snapshot(time, 0/*center x of both tapes*/, 0/*center y, not really important*/, 0/*width between the tapes*/);
-//				raw = new ArrayList<Rect>(rects);
-//			}
-//
-//		});
-//		visionThread.start();
+		lastObserved = new Snapshot(0, 0, 0, 0);
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+		camera.setExposureManual(25);
+		camera.setWhiteBalanceManual(0);
+		
+
+		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+			
+			oldTime = lastObserved.time;
+			time = System.currentTimeMillis();
+
+			ArrayList<Rect> rects = new ArrayList<Rect>();
+			for (MatOfPoint mop : pipeline.findContoursOutput())
+					rects.add(Imgproc.boundingRect(mop));
+			
+			for(int i=0;i<rects.size();i++)
+			{
+				Rect r = rects.get(i);
+				if((Math.abs(2.5 - r.height / (float)r.width)>0.5) && (r.y)> 1 )
+				{
+					rects.remove(i);
+					i--;
+				}
+			}
+
+			if (rects.isEmpty()) {
+
+				ArrayList<Integer> centerX = new ArrayList<Integer>();
+				for (Rect r : rects) {
+					centerX.add(r.x + (r.width / 2));
+				}
+				
+				if (time - oldTime < 200) {
+					//use lastObserved to help determine the new position
+					observed = new Snapshot(0,0,0,0);
+
+				} else {
+					//determine position with rectangle data only
+					observed = new Snapshot(0,0,0,0);
+
+				}
+			} else {
+				if (time - oldTime < 500) {
+					observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
+				} else {
+					observed = new Snapshot(0,0,0,0);
+				}
+			}
+
+			synchronized (imgLock) {
+				lastObserved = observed;
+				raw = new ArrayList<Rect>(rects);
+			}
+
+		});
+		visionThread.start();
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
 	}
@@ -107,27 +131,34 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
-//		String rawString;
-//		synchronized (imgLock) {
-//			rawString = "";
-//			for (Rect i : raw)
-//				rawString = rawString + i.toString() + "    ";
-//			SmartDashboard.putString("raw data", rawString);
-//		}
+		String rawString;
+		Snapshot outputSnapshot;
+		synchronized (imgLock) {
+			outputSnapshot = lastObserved;
+			rawString = "";
+			for (Rect i : raw)
+				rawString = rawString + i.toString() + "    ";
+		}
+		SmartDashboard.putNumber("T",outputSnapshot.time);
+		SmartDashboard.putNumber("X",outputSnapshot.x);
+		SmartDashboard.putNumber("Y",outputSnapshot.y);
+		SmartDashboard.putNumber("Z",outputSnapshot.width);
+		SmartDashboard.putString("raw data", rawString);
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}
 
-//	private class Snapshot {
-//		public long time;
-//		public double x;
-//		public double y;
-//		public double width;
-//
-//		public Snapshot(long time, double x, double y, double width) {
-//			this.time = time;
-//			this.x = x;
-//			this.y = y;
-//			this.width = width;
-//		}
+	private class Snapshot {
+		public long time;
+		public double x;
+		public double y;
+		public double width;
+
+		public Snapshot(long time, double x, double y, double width) {
+			this.time = time;
+			this.x = x;
+			this.y = y;
+			this.width = width;
+		}
 	}
+}
