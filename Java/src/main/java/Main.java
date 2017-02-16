@@ -16,7 +16,13 @@ import org.usfirst.frc.team5338.robot.Snapshot;
 
 public class Main {
 	
-	NetworkTable table;
+	static NetworkTable table;
+	
+	private static final int IMG_WIDTH = 1280;
+	private static final int IMG_HEIGHT = 720;
+	
+	static Snapshot observed, lastObserved;
+	static long time, oldTime;
 	
   public static void main(String[] args) {
     // Loads our OpenCV library. This MUST be included
@@ -71,7 +77,7 @@ public class Main {
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
-    camera.setResolution(1280,720);
+    camera.setResolution(IMG_WIDTH,IMG_HEIGHT);
 	camera.setExposureManual(25);
 	camera.setWhiteBalanceManual(0);    
 
@@ -208,4 +214,17 @@ public class Main {
     server.setSource(camera);
     return camera;
   }
+  
+  public class Snapshot {
+		public long time;
+		public double x;
+		public double y;
+		public double width;
+
+		public Snapshot(long time, double x, double y, double width) {
+			this.time = time;
+			this.x = x;
+			this.y = y;
+			this.width = width;
+		}
 }
