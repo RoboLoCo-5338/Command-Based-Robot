@@ -10,8 +10,14 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team5338.robot.GripPipeline;
+import org.usfirst.frc.team5338.robot.Snapshot;
+
+
 
 public class Main {
+	
+	NetworkTable table;
+	
   public static void main(String[] args) {
     // Loads our OpenCV library. This MUST be included
     System.loadLibrary("opencv_java310");
@@ -86,7 +92,8 @@ public class Main {
     Mat hsv = new Mat();
     
     GripPipeline gp = new GripPipeline();
-
+    
+    table = NetworkTable.getTable("datatable");
     // Infinitely process image
     while (true) {
       // Grab a frame. If it has a frame time of 0, there was an error.
@@ -118,6 +125,33 @@ public class Main {
 				i--;
 			}
 		}
+		
+		if (!rects.isEmpty()) {
+			
+			if(rects.size()==2) {
+				Rect r1 = rects.get(0);
+				Rect r2 = rects.get(1);
+				
+				observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
+			} else if (time - oldTime < 200) {
+				//use lastObserved to help determine the new position
+				//TODO 1 or >3 rectangles
+				observed = new Snapshot(0,0,0,0);
+
+			} else {
+				//determine position with rectangle data only
+				//TODO 1 or >3 rectangles
+				observed = new Snapshot(0,0,0,0);
+
+			}
+		} else {
+			if (time - oldTime < 500) {
+				observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
+			} else {
+				observed = new Snapshot(0,0,0,0);
+			}
+		}
+		
 
       // Below is where you would do your OpenCV operations on the provided image
       // The sample below just changes color source to HSV
