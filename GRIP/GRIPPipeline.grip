@@ -8,34 +8,34 @@
     <grip:Step name="Blur">
       <grip:Input step="0" socket="0"/>
       <grip:Input step="0" socket="1">
-        <value>BOX</value>
+        <value>MEDIAN</value>
       </grip:Input>
       <grip:Input step="0" socket="2">
-        <value>2.7027027027027026</value>
+        <value>1.8018018018018014</value>
       </grip:Input>
-      <grip:Output step="0" socket="0" previewed="true"/>
+      <grip:Output step="0" socket="0" previewed="false"/>
     </grip:Step>
     <grip:Step name="HSL Threshold">
       <grip:Input step="1" socket="0"/>
       <grip:Input step="1" socket="1">
         <value>
-          <double>64.74820143884891</double>
-          <double>96.66666666666666</double>
+          <double>53.41726618705036</double>
+          <double>70.9090909090909</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="2">
         <value>
-          <double>220.14388489208636</double>
+          <double>243.5341726618705</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>94.01978417266189</double>
-          <double>179.87373737373738</double>
+          <double>110.07194244604317</double>
+          <double>139.0909090909091</double>
         </value>
       </grip:Input>
-      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Output step="1" socket="0" previewed="false"/>
     </grip:Step>
     <grip:Step name="CV Canny">
       <grip:Input step="2" socket="0"/>
@@ -49,9 +49,9 @@
         <value>3.0</value>
       </grip:Input>
       <grip:Input step="2" socket="4">
-        <value>false</value>
+        <value>true</value>
       </grip:Input>
-      <grip:Output step="2" socket="0" previewed="false"/>
+      <grip:Output step="2" socket="0" previewed="true"/>
     </grip:Step>
     <grip:Step name="Find Contours">
       <grip:Input step="3" socket="0"/>
@@ -60,60 +60,94 @@
       </grip:Input>
       <grip:Output step="3" socket="0" previewed="true"/>
     </grip:Step>
-    <grip:Step name="NTPublish ContoursReport">
+    <grip:Step name="Filter Contours">
       <grip:Input step="4" socket="0"/>
       <grip:Input step="4" socket="1">
-        <value>myContoursReport</value>
+        <value>0</value>
       </grip:Input>
       <grip:Input step="4" socket="2">
-        <value>false</value>
+        <value>0.0</value>
       </grip:Input>
       <grip:Input step="4" socket="3">
-        <value>true</value>
+        <value>40.0</value>
       </grip:Input>
       <grip:Input step="4" socket="4">
-        <value>true</value>
+        <value>1000.0</value>
       </grip:Input>
       <grip:Input step="4" socket="5">
-        <value>true</value>
+        <value>100.0</value>
       </grip:Input>
       <grip:Input step="4" socket="6">
-        <value>true</value>
+        <value>1000</value>
       </grip:Input>
       <grip:Input step="4" socket="7">
-        <value>false</value>
+        <value>
+          <double>96.22302158273382</double>
+          <double>100.0</double>
+        </value>
       </grip:Input>
+      <grip:Input step="4" socket="8">
+        <value>25.0</value>
+      </grip:Input>
+      <grip:Input step="4" socket="9">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="4" socket="10">
+        <value>0.0</value>
+      </grip:Input>
+      <grip:Input step="4" socket="11">
+        <value>20.0</value>
+      </grip:Input>
+      <grip:Output step="4" socket="0" previewed="true"/>
     </grip:Step>
-    <grip:Step name="Publish Video">
+    <grip:Step name="NTPublish ContoursReport">
       <grip:Input step="5" socket="0"/>
       <grip:Input step="5" socket="1">
-        <value>50.27027027027027</value>
+        <value>myContoursReport</value>
+      </grip:Input>
+      <grip:Input step="5" socket="2">
+        <value>false</value>
+      </grip:Input>
+      <grip:Input step="5" socket="3">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="4">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="6">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="5" socket="7">
+        <value>false</value>
       </grip:Input>
     </grip:Step>
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Input step="3" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
       <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="false"/>
+      <grip:Output step="4" socket="0" previewed="true"/>
       <grip:Input step="5" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="0" socket="0" previewed="false"/>
+      <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="3" socket="0" previewed="true"/>
       <grip:Input step="4" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="2" socket="0" previewed="false"/>
-      <grip:Input step="3" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="0" socket="0" previewed="true"/>
-      <grip:Input step="1" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Output step="1" socket="0" previewed="false"/>
       <grip:Input step="2" socket="0"/>
     </grip:Connection>
   </connections>
@@ -131,7 +165,7 @@
     <className>GripPipeline</className>
     <implementWpilibPipeline>true</implementWpilibPipeline>
     <saveDir>C:\Users\RoboLoCo\GRIP</saveDir>
-    <packageName></packageName>
+    <packageName>main.java</packageName>
     <moduleName>grip</moduleName>
   </codeGenerationSettings>
 </grip:Pipeline>
