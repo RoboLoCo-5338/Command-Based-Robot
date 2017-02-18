@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team5338.robot.*;
+
 /**
  * The DriveTrain subsystem incorporates the sensors and actuators attached to
  * the robots chassis. These include four drive motors.
@@ -57,8 +59,16 @@ public class DriveTrain extends Subsystem
 	public void drive(Joystick joy1)
 	{
 		throttle = (1-(joy1.getRawAxis(2)))/2;
-
-		DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
+//		if(joy1.getRawButton(3))
+//		{
+//			int x = (int)Robot.outputSnapshot.x;
+//			if(Math.abs(x)<10)
+//				;
+//			else
+//				DRIVE.arcadeDrive(0, -1* throttle * x/1280.0 + (x>0?-.2:.2), false);
+//		}
+//		else
+	    DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)
 	{

@@ -1,12 +1,29 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import edu.wpi.first.wpilibj.networktables.*;
 import edu.wpi.first.wpilibj.tables.*;
 import edu.wpi.cscore.*;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team5338.robot.GripPipeline;
+import org.usfirst.frc.team5338.robot.Snapshot;
+
+
 
 public class Main {
+	
+	static NetworkTable table;
+	
+	private static final int IMG_WIDTH = 1280;
+	private static final int IMG_HEIGHT = 720;
+	
+	static Snapshot observed, lastObserved;
+	static long time, oldTime;
+	
   public static void main(String[] args) {
     // Loads our OpenCV library. This MUST be included
     System.loadLibrary("opencv_java310");
@@ -60,8 +77,9 @@ public class Main {
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
-    camera.setResolution(640,360);
-    
+    camera.setResolution(IMG_WIDTH,IMG_HEIGHT);
+	camera.setExposureManual(25);
+	camera.setWhiteBalanceManual(0);    
 
     // This creates a CvSink for us to use. This grabs images from our selected camera, 
     // and will allow us to use those images in opencv
@@ -78,17 +96,71 @@ public class Main {
     // as they are expensive to create
     Mat inputImage = new Mat();
     Mat hsv = new Mat();
-
+    
+    GripPipeline gp = new GripPipeline();
+    
+    table = NetworkTable.getTable("datatable");
     // Infinitely process image
     while (true) {
       // Grab a frame. If it has a frame time of 0, there was an error.
       // Just skip and continue
       long frameTime = imageSink.grabFrame(inputImage);
       if (frameTime == 0) continue;
+      
+      gp.process(inputImage);
+      
+      ArrayList<MatOfPoint> fCO = gp.findContoursOutput();
+      
+		ArrayList<Rect> rects = new ArrayList<Rect>();
+		for (MatOfPoint mop : fCO)
+				rects.add(Imgproc.boundingRect(mop));
+		
+		//remove duplicates
+		Set<Rect> hs = new HashSet<>();
+		hs.addAll(rects);
+		rects.clear();
+		rects.addAll(hs);
+		
+		//remove rectangles that aren't the right size
+		for(int i=0;i<rects.size();i++)
+		{
+			Rect r = rects.get(i);
+			if((Math.abs(2.5 - r.height / (float)r.width)>0.5) && (r.y)> 1 )
+			{
+				rects.remove(i);
+				i--;
+			}
+		}
+		
+		if (!rects.isEmpty()) {
+			
+			if(rects.size()==2) {
+				Rect r1 = rects.get(0);
+				Rect r2 = rects.get(1);
+				
+				observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
+			} else if (time - oldTime < 200) {
+				//use lastObserved to help determine the new position
+				//TODO 1 or >3 rectangles
+				observed = new Snapshot(0,0,0,0);
+
+			} else {
+				//determine position with rectangle data only
+				//TODO 1 or >3 rectangles
+				observed = new Snapshot(0,0,0,0);
+
+			}
+		} else {
+			if (time - oldTime < 500) {
+				observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
+			} else {
+				observed = new Snapshot(0,0,0,0);
+			}
+		}
+		
 
       // Below is where you would do your OpenCV operations on the provided image
       // The sample below just changes color source to HSV
-      Imgproc.cvtColor(inputImage, hsv, Imgproc.COLOR_BGR2HSV);
 
       // Here is where you would write a processed image that you want to restreams
       // This will most likely be a marked up image of what the camera sees
@@ -142,4 +214,17 @@ public class Main {
     server.setSource(camera);
     return camera;
   }
+  
+  public class Snapshot {
+		public long time;
+		public double x;
+		public double y;
+		public double width;
+
+		public Snapshot(long time, double x, double y, double width) {
+			this.time = time;
+			this.x = x;
+			this.y = y;
+			this.width = width;
+		}
 }
