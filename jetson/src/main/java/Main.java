@@ -9,8 +9,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team5338.robot.GripPipeline;
-import org.usfirst.frc.team5338.robot.Snapshot;
+import main.java.GripPipeline;
 
 public class Main
 {
@@ -51,125 +50,6 @@ public class Main
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
-    camera.setResolution(IMG_WIDTH,IMG_HEIGHT); 
-//	visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-//
-//		oldTime = lastObserved.time;
-//		time = System.currentTimeMillis();
-//
-//		ArrayList<Rect> rects = new ArrayList<Rect>();
-//		for (MatOfPoint mop : pipeline.findContoursOutput())
-//				rects.add(Imgproc.boundingRect(mop));
-//
-//		//remove duplicates
-//		Set<Rect> hs = new HashSet<>();
-//		hs.addAll(rects);
-//		rects.clear();
-//		rects.addAll(hs);
-//
-//		//remove rectangles that aren't the right size
-//		for(int i=0;i<rects.size();i++)
-//		{
-//			Rect r = rects.get(i);
-//			if((Math.abs(2.5 - r.height / (float)r.width)>0.5) && (r.y)> 1 )
-//			{
-//				rects.remove(i);
-//				i--;
-//			}
-//		}
-//
-//			// In order for the location algorithms to work, first we need SF2 to
-//			// orient the robot to directly face the reflective tape, or have the camera
-//			// face it
-//
-//			if (!rects.isEmpty()) {
-//
-//				if(rects.size()==2) {
-//					Rect r1 = rects.get(0);
-//					Rect r2 = rects.get(1);
-//					
-//					//observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
-//				} else if (time - oldTime < 200) {
-//					//use lastObserved to help determine the new position
-//					//TODO 1 or >3 rectangles
-//					//observed = new Snapshot(0,0,0,0);
-//
-//				} else {
-//					//determine position with rectangle data only
-//					//TODO 1 or >3 rectangles
-//					Rect r1 = rects.get(0);
-//					Rect r2 = rects.get(1);
-//					Rect r3 = rects.get(2);
-//
-//					ArrayList<Rect> rects = new ArrayList<Rect>();
-//
-//					/*
-//					* rect at rects(0) will be the largest rectangle that we see
-//					*/
-//
-//					if(r1.height > r2.height && r1.height > r3.height)
-//					{
-//						rects.add(r1);
-//						rects.add(r2);
-//						rects.add(r3);
-//					}
-//					else if(r2.height > r1.height && r2.height > r3.height)
-//					{
-//						rects.add(r2);
-//						rects.add(r1);
-//						rects.add(r3);
-//					}
-//					else
-//					{
-//						rects.add(r3);
-//						rects.add(r1);
-//						rects.add(r2);
-//					}
-//					//Biggest rectangle is added first
-//
-//					if(rects.get(1).x == rects.get(2).x * 1.02 && rects.get(1).x == rects.get(2).x * 0.98)
-//					{
-//						// dimensions of the rectangle: h: 130.175 w: 50.8 in millimeters, h/w = 2.5625
-//
-//						double HEIGHT_OF_RECTANGLE_IN_PIXELS_WHEN_DOCKED = 300;
-//						// TODO: THIS NEEDS TO BE DETERMINED WITH ACTUAL TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//
-//						double distance = 1 / ((HEIGHT_OF_RECTANGLE_IN_PIXELS_WHEN_DOCKED) / rects.get(0).height);
-//						// calculate distance by doing 1 meter / distance = expected height / height
-//						// need to check if true
-//						double expWidth = rects.get(0).height / 2.5625; // expected width
-//						double angle = asin(rects.get(0).width / expWidth); // find the angle of the robot compared to straight on
-//
-//						int side = 0; // 1 = left of the peg - 2 = right of the peg
-//
-//						if(rects.get(0).x > rects.get(1).x)
-//						{
-//							side = 2;
-//						}
-//						else
-//						{
-//							side = 1;
-//						}
-//					}
-//					//observed = new Snapshot(0,0,0,0);
-//
-//				}
-//			} else {
-//				if (time - oldTime < 500) {
-//					//observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
-//				} else {
-//					//observed = new Snapshot(0,0,0,0);
-//				}
-//			}
-//
-//		synchronized (imgLock) {
-//			lastObserved = observed;
-//			raw = new ArrayList<Rect>(rects);
-//		}
-//
-//	});
-//	visionThread.start();
-    
     // This creates a CvSink for us to use. This grabs images from our selected camera,
     // and will allow us to use those images in opencv
     CvSink imageSink = new CvSink("CV Image Grabber");
@@ -177,7 +57,7 @@ public class Main
 
     // This creates a CvSource to use. This will take in a Mat image that has had OpenCV operations
     // operations
-    
+
     CvSource imageSource = new CvSource("CV Image Source", VideoMode.PixelFormat.kMJPEG, IMG_WIDTH, IMG_HEIGHT, 30);
     MjpegServer cvStream = new MjpegServer("CV Image Stream", 1186);
     cvStream.setSource(imageSource);
@@ -222,31 +102,87 @@ public class Main
 			}
 		}
 
-		if (!rects.isEmpty()) {
+		if (!rects.isEmpty())
+		{
+				if(rects.size()==2) {
+					Rect r1 = rects.get(0);
+					Rect r2 = rects.get(1);
 
-			if(rects.size()==2) {
-				Rect r1 = rects.get(0);
-				Rect r2 = rects.get(1);
+					//observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
+				} else if (time - oldTime < 200) {
+					//use lastObserved to help determine the new position
+					//TODO 1 or >3 rectangles
+					//observed = new Snapshot(0,0,0,0);
 
-				observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
-			} else if (time - oldTime < 200) {
-				//use lastObserved to help determine the new position
-				//TODO 1 or >3 rectangles
-				observed = new Snapshot(0,0,0,0);
+				} else {
+					//determine position with rectangle data only
+					//TODO 1 or >3 rectangles
+					Rect r1 = rects.get(0);
+					Rect r2 = rects.get(1);
+					Rect r3 = rects.get(2);
 
+					ArrayList<Rect> rects = new ArrayList<Rect>();
+
+					/*
+					* rect at rects(0) will be the largest rectangle that we see
+					*/
+
+					if(r1.height > r2.height && r1.height > r3.height)
+					{
+						rects.add(r1);
+						rects.add(r2);
+						rects.add(r3);
+					}
+					else if(r2.height > r1.height && r2.height > r3.height)
+					{
+						rects.add(r2);
+						rects.add(r1);
+						rects.add(r3);
+					}
+					else
+					{
+						rects.add(r3);
+						rects.add(r1);
+						rects.add(r2);
+					}
+					//Biggest rectangle is added first
+
+					if(rects.get(1).x == rects.get(2).x * 1.02 && rects.get(1).x == rects.get(2).x * 0.98) // this is determine if the rectangles are good
+					{
+						// dimensions of the rectangle: h: 130.175 w: 50.8 in millimeters, h/w = 2.5625
+
+						double HEIGHT_OF_RECTANGLE_IN_PIXELS_WHEN_DOCKED = 300;
+						// TODO: THIS NEEDS TO BE DETERMINED WITH ACTUAL TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+						double distance = 1 / ((HEIGHT_OF_RECTANGLE_IN_PIXELS_WHEN_DOCKED) / rects.get(0).height);
+						// calculate distance by doing 1 meter / distance = expected height / height
+						// need to check if true
+						double expWidth = rects.get(0).height / 2.5625; // expected width
+						double angle = asin(rects.get(0).width / expWidth); // find the angle of the robot compared to straight on
+
+						int side = 0; // 1 = left of the peg - 2 = right of the peg
+
+						if(rects.get(0).x > rects.get(1).x)
+						{
+							side = 2;
+						}
+						else
+						{
+							side = 1;
+						}
+					}
+					//observed = new Snapshot(0,0,0,0);
+					table.putNumber("angle", angle);
+					table.putNumber("side", side);
+					table.putNumber("distance", distance);
+				}
 			} else {
-				//determine position with rectangle data only
-				//TODO 1 or >3 rectangles
-				observed = new Snapshot(0,0,0,0);
-
+				if (time - oldTime < 500) {
+					//observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
+				} else {
+					//observed = new Snapshot(0,0,0,0);
+				}
 			}
-		} else {
-			if (time - oldTime < 500) {
-				observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
-			} else {
-				observed = new Snapshot(0,0,0,0);
-			}
-		}
 
 
       // Below is where you would do your OpenCV operations on the provided image
