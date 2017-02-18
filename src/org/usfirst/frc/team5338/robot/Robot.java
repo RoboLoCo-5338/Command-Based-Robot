@@ -63,16 +63,8 @@ public class Robot extends IterativeRobot
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
-		//lastObserved = new Snapshot(0, 0, 0, 0);
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-
-		// Jetson power spark on enable
-		jetsonPower.set(Relay.Value.kOn);
-		Timer.delay(1);
-		jetsonPower.set(Relay.Value.kOff);
-
+	public void robotInit()
+	{
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new Autonomous();
 	}
@@ -93,9 +85,11 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
-//		jetsonPower.set(Relay.Value.kOn);
-//		Timer.delay(1);
-//		jetsonPower.set(Relay.Value.kOff);
+
+		// Jetson power spark on enable
+		jetsonPower.set(Relay.Value.kOn);
+		Timer.delay(1);
+		jetsonPower.set(Relay.Value.kOff);
 		autonomousCommand.cancel();
 	}
 
