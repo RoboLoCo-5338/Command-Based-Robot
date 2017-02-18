@@ -9,14 +9,12 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team5338.robot.GripPipeline;
-import org.usfirst.frc.team5338.robot.Snapshot;
+import main.java.GripPipeline;
 
+public class Main
+{
 
-
-public class Main {
-
-	static NetworkTable table;
+	private static NetworkTable table;
 
 	private static final int IMG_WIDTH = 1280;
 	private static final int IMG_HEIGHT = 720;
@@ -43,31 +41,6 @@ public class Main {
     // This stores our reference to our mjpeg server for streaming the input image
     MjpegServer inputStream = new MjpegServer("MJPEG Server", streamPort);
 
-    // Selecting a Camera
-    // Uncomment one of the 2 following camera options
-    // The top one receives a stream from another device, and performs operations based on that
-    // On windows, this one must be used since USB is not supported
-    // The bottom one opens a USB camera, and performs operations on that, along with streaming
-    // the input image so other devices can see it.
-
-    // HTTP Camera
-    /*
-    // This is our camera name from the robot. this can be set in your robot code with the following command
-    // CameraServer.getInstance().startAutomaticCapture("YourCameraNameHere");
-    // "USB Camera 0" is the default if no string is specified
-    String cameraName = "USB Camera 0";
-    HttpCamera camera = setHttpCamera(cameraName, inputStream);
-    // It is possible for the camera to be null. If it is, that means no camera could
-    // be found using NetworkTables to connect to. Create an HttpCamera by giving a specified stream
-    // Note if this happens, no restream will be created
-    if (camera == null) {
-      camera = new HttpCamera("CoprocessorCamera", "YourURLHere");
-      inputStream.setSource(camera);
-    }
-    */
-
-
-
     /***********************************************/
 
     // USB Camera
@@ -77,8 +50,6 @@ public class Main {
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
-    camera.setResolution(IMG_WIDTH,IMG_HEIGHT);
-
     // This creates a CvSink for us to use. This grabs images from our selected camera,
     // and will allow us to use those images in opencv
     CvSink imageSink = new CvSink("CV Image Grabber");
@@ -86,6 +57,7 @@ public class Main {
 
     // This creates a CvSource to use. This will take in a Mat image that has had OpenCV operations
     // operations
+
     CvSource imageSource = new CvSource("CV Image Source", VideoMode.PixelFormat.kMJPEG, IMG_WIDTH, IMG_HEIGHT, 30);
     MjpegServer cvStream = new MjpegServer("CV Image Stream", 1186);
     cvStream.setSource(imageSource);
