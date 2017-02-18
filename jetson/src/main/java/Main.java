@@ -77,13 +77,7 @@ public class Main {
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
-<<<<<<< HEAD
     camera.setResolution(IMG_WIDTH,IMG_HEIGHT); 
-=======
-    camera.setResolution(IMG_WIDTH,IMG_HEIGHT);
-	camera.setExposureManual(25);
-	camera.setWhiteBalanceManual(0);
->>>>>>> branch 'master' of https://github.com/RoboLoco2017/Command-Based-Robot.git
 
     // This creates a CvSink for us to use. This grabs images from our selected camera,
     // and will allow us to use those images in opencv
@@ -91,13 +85,8 @@ public class Main {
     imageSink.setSource(camera);
 
     // This creates a CvSource to use. This will take in a Mat image that has had OpenCV operations
-<<<<<<< HEAD
-    // operations 
-    CvSource imageSource = new CvSource("CV Image Source", VideoMode.PixelFormat.kMJPEG, IMG_WIDTH, IMG_HEIGHT, 30);
-=======
     // operations
-    CvSource imageSource = new CvSource("CV Image Source", VideoMode.PixelFormat.kMJPEG, 640, 480, 30);
->>>>>>> branch 'master' of https://github.com/RoboLoco2017/Command-Based-Robot.git
+    CvSource imageSource = new CvSource("CV Image Source", VideoMode.PixelFormat.kMJPEG, IMG_WIDTH, IMG_HEIGHT, 30);
     MjpegServer cvStream = new MjpegServer("CV Image Stream", 1186);
     cvStream.setSource(imageSource);
 
