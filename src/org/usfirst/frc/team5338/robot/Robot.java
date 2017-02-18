@@ -68,7 +68,9 @@ public class Robot extends IterativeRobot
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 
-
+		jetsonPower.set(Relay.Value.kOn);
+		Timer.delay(1);
+		jetsonPower.set(Relay.Value.kOff);
 //		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 //
 //			oldTime = lastObserved.time;
