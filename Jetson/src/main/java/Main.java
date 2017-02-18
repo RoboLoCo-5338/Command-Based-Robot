@@ -15,15 +15,15 @@ import org.usfirst.frc.team5338.robot.Snapshot;
 
 
 public class Main {
-	
+
 	static NetworkTable table;
-	
+
 	private static final int IMG_WIDTH = 1280;
 	private static final int IMG_HEIGHT = 720;
-	
+
 	static Snapshot observed, lastObserved;
 	static long time, oldTime;
-	
+
   public static void main(String[] args) {
     // Loads our OpenCV library. This MUST be included
     System.loadLibrary("opencv_java310");
@@ -65,29 +65,29 @@ public class Main {
       inputStream.setSource(camera);
     }
     */
-    
-      
+
+
 
     /***********************************************/
 
     // USB Camera
-    
-    // This gets the image from a USB camera 
+
+    // This gets the image from a USB camera
     // Usually this will be on device 0, but there are other overloads
     // that can be used
     UsbCamera camera = setUsbCamera(0, inputStream);
     // Set the resolution for our camera, since this is over USB
     camera.setResolution(IMG_WIDTH,IMG_HEIGHT);
 	camera.setExposureManual(25);
-	camera.setWhiteBalanceManual(0);    
+	camera.setWhiteBalanceManual(0);
 
-    // This creates a CvSink for us to use. This grabs images from our selected camera, 
+    // This creates a CvSink for us to use. This grabs images from our selected camera,
     // and will allow us to use those images in opencv
     CvSink imageSink = new CvSink("CV Image Grabber");
     imageSink.setSource(camera);
 
     // This creates a CvSource to use. This will take in a Mat image that has had OpenCV operations
-    // operations 
+    // operations
     CvSource imageSource = new CvSource("CV Image Source", VideoMode.PixelFormat.kMJPEG, 640, 480, 30);
     MjpegServer cvStream = new MjpegServer("CV Image Stream", 1186);
     cvStream.setSource(imageSource);
@@ -96,9 +96,9 @@ public class Main {
     // as they are expensive to create
     Mat inputImage = new Mat();
     Mat hsv = new Mat();
-    
+
     GripPipeline gp = new GripPipeline();
-    
+
     table = NetworkTable.getTable("datatable");
     // Infinitely process image
     while (true) {
@@ -106,21 +106,21 @@ public class Main {
       // Just skip and continue
       long frameTime = imageSink.grabFrame(inputImage);
       if (frameTime == 0) continue;
-      
+
       gp.process(inputImage);
-      
+
       ArrayList<MatOfPoint> fCO = gp.findContoursOutput();
-      
+
 		ArrayList<Rect> rects = new ArrayList<Rect>();
 		for (MatOfPoint mop : fCO)
 				rects.add(Imgproc.boundingRect(mop));
-		
+
 		//remove duplicates
 		Set<Rect> hs = new HashSet<>();
 		hs.addAll(rects);
 		rects.clear();
 		rects.addAll(hs);
-		
+
 		//remove rectangles that aren't the right size
 		for(int i=0;i<rects.size();i++)
 		{
@@ -131,13 +131,13 @@ public class Main {
 				i--;
 			}
 		}
-		
+
 		if (!rects.isEmpty()) {
-			
+
 			if(rects.size()==2) {
 				Rect r1 = rects.get(0);
 				Rect r2 = rects.get(1);
-				
+
 				observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
 			} else if (time - oldTime < 200) {
 				//use lastObserved to help determine the new position
@@ -157,7 +157,7 @@ public class Main {
 				observed = new Snapshot(0,0,0,0);
 			}
 		}
-		
+
 
       // Below is where you would do your OpenCV operations on the provided image
       // The sample below just changes color source to HSV
@@ -207,14 +207,14 @@ public class Main {
   }
 
   private static UsbCamera setUsbCamera(int cameraId, MjpegServer server) {
-    // This gets the image from a USB camera 
+    // This gets the image from a USB camera
     // Usually this will be on device 0, but there are other overloads
     // that can be used
     UsbCamera camera = new UsbCamera("CoprocessorCamera", cameraId);
     server.setSource(camera);
     return camera;
   }
-  
+
   public class Snapshot {
 		public long time;
 		public double x;
@@ -227,4 +227,5 @@ public class Main {
 			this.y = y;
 			this.width = width;
 		}
+}
 }
