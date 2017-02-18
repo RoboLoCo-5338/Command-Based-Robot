@@ -227,5 +227,5 @@ public class Main {
 			this.y = y;
 			this.width = width;
 		}
-}
+	}
 }
