@@ -129,7 +129,7 @@ public class Robot extends IterativeRobot
 
 
 						// dimensions of the rectangle: h: 130.175 w: 50.8 in millimeters, h/w = 2.5625
-						double distance = 1 / ((HEIGHT OF RECTANGLE IN PIXELS WHEN DOCKED) / r.height);
+						//double distance = 1 / ((HEIGHT OF RECTANGLE IN PIXELS WHEN DOCKED) / r.height);
 						// calculate distance by doing 1 meter / distance = expected height / height
 						// need to check if true
 						double expWidth = r.height / 2.5625; // expected width
@@ -137,7 +137,7 @@ public class Robot extends IterativeRobot
 
 						int side = 0; // 1 = left of the peg - 2 = right of the peg
 
-						if()
+						//if()
 
 						//observed = new Snapshot(0,0,0,0);
 
