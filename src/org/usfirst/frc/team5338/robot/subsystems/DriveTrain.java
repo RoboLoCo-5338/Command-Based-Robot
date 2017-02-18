@@ -68,7 +68,7 @@ public class DriveTrain extends Subsystem
 			Timer.delay(1);
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
-		throttle = (1-(joy.getRawAxis(2)))/2;
+		throttle = (1 - (joy.getRawAxis(2))) / 2;
 	    DRIVE.arcadeDrive(throttle * joystickDeadZone(joy.getRawAxis(1)), -throttle * joystickDeadZone(joy.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.networktables.ConnectionInfo;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -39,7 +40,7 @@ public class Robot extends IterativeRobot
 	private static final Relay jetsonPower = new Relay(0);
 	public static final Relay jetsonReset = new Relay(1);
 
-	//NetworkTable table = NetworkTable.getTable("myContourReport");
+	NetworkTable table = NetworkTable.getTable("datatable");
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -78,6 +79,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic()
 	{
+		ConnectionInfo[] foo = NetworkTable.connections();
+		SmartDashboard.putString("Jetson OK", Arrays.toString(foo));
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}
