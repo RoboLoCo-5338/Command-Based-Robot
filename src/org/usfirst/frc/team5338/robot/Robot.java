@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,13 +27,15 @@ import edu.wpi.first.wpilibj.Relay;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot
+{
 	Command autonomousCommand;
 	private static final int IMG_WIDTH = 1280;
 	private static final int IMG_HEIGHT = 720;
 
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
+
 
 	private final Object imgLock = new Object();
 
@@ -43,9 +48,15 @@ public class Robot extends IterativeRobot {
 
 	public static Snapshot outputSnapshot;
 
+
+	private static final Relay jetsonPower = new Relay(0);
+	private static final Relay jetsonReset = new Relay(1);
+
+	//NetworkTable table = NetworkTable.getTable("myContourReport");
+
 	//private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
 
-	VisionThread visionThread;
+//	VisionThread visionThread;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,7 +64,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		lastObserved = new Snapshot(0, 0, 0, 0);
+		//lastObserved = new Snapshot(0, 0, 0, 0);
 		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 		camera.setExposureManual(25);
@@ -96,11 +107,11 @@ public class Robot extends IterativeRobot {
 						Rect r1 = rects.get(0);
 						Rect r2 = rects.get(1);
 
-						observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
+						//observed = new Snapshot(time, (r1.x+r2.x+r1.width+r2.width)/2-IMG_WIDTH/2, (r1.y+r2.y+r1.height+r2.height)/2, Math.abs(r1.x-r2.x));
 					} else if (time - oldTime < 200) {
 						//use lastObserved to help determine the new position
 						//TODO 1 or >3 rectangles
-						observed = new Snapshot(0,0,0,0);
+						//observed = new Snapshot(0,0,0,0);
 
 					} else {
 						//determine position with rectangle data only
@@ -111,7 +122,7 @@ public class Robot extends IterativeRobot {
 
 						//Add heights
 						ArrayList<double> rheights = new ArrayList<double>();
-						
+
 						rheights.add(r1.height);
 						rheights.add(r2.height);
 						rheights.add(r3.height);
@@ -128,14 +139,14 @@ public class Robot extends IterativeRobot {
 
 						if()
 
-						observed = new Snapshot(0,0,0,0);
+						//observed = new Snapshot(0,0,0,0);
 
 					}
 				} else {
 					if (time - oldTime < 500) {
-						observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
+						//observed = new Snapshot(lastObserved.time,lastObserved.x,lastObserved.y,lastObserved.width);
 					} else {
-						observed = new Snapshot(0,0,0,0);
+						//observed = new Snapshot(0,0,0,0);
 					}
 				}
 
@@ -146,7 +157,9 @@ public class Robot extends IterativeRobot {
 
 		});
 		visionThread.start();
+
 		// instantiate the command used for the autonomous period
+		jetsonPower.set(Relay.Value.kOn);
 		autonomousCommand = new Autonomous();
 	}
 
@@ -166,22 +179,22 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		autonomousCommand.cancel();
-		light.set(Relay.Value.kForward);
 	}
 
 	@Override
-	public void teleopPeriodic() {
-		String rawString;
-		synchronized (imgLock) {
-			outputSnapshot = lastObserved;
-			rawString = "";
-			for (Rect i : raw)
-				rawString = rawString + i.toString() + "    ";
-		}
-		SmartDashboard.putNumber("X",outputSnapshot.x);
-		SmartDashboard.putNumber("Y",outputSnapshot.y);
-		SmartDashboard.putNumber("Z",outputSnapshot.width);
-		SmartDashboard.putString("raw data", rawString);
+	public void teleopPeriodic()
+	{
+//		String rawString;
+//		synchronized (imgLock) {
+//			outputSnapshot = lastObserved;
+//			rawString = "";
+//			for (Rect i : raw)
+//				rawString = rawString + i.toString() + "    ";
+//		}
+//		SmartDashboard.putNumber("X",outputSnapshot.x);
+//		SmartDashboard.putNumber("Y",outputSnapshot.y);
+//		SmartDashboard.putNumber("Z",outputSnapshot.width);
+//		SmartDashboard.putString("raw data", rawString);
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}

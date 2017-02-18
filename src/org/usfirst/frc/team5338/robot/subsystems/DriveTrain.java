@@ -59,26 +59,17 @@ public class DriveTrain extends Subsystem
 	public void drive(Joystick joy1)
 	{
 		throttle = (1-(joy1.getRawAxis(2)))/2;
-		if(joy1.getRawButton(3))
-		{
-			int x = (int)Robot.outputSnapshot.x;
-			if(Math.abs(x)<10)
-				;
-			else
-				DRIVE.arcadeDrive(0, -1* throttle * x/1280.0 + (x>0?-.2:.2), false);
-		}
-		else
-			DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
+	    DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)
 	{
-		if (value > 0.05 || value < -0.05)
+		if (value > 0.04 || value < -0.04)
 		{
-		 return (value - 0.05)/0.95;
+		 return (value - 0.04)/0.96;
 		}
-		else if (value < -0.05)
+		else if (value < -0.04)
 		{
-		 return (value + 0.05)/0.95;
+		 return (value + 0.04)/0.94;
 		}
 		return 0.0;
 	}

@@ -1,7 +1,10 @@
 #!/bin/bash
-export http_proxy="http://localhost:3128"
-export https_proxy="http://localhost:3128"
+set -e
+set -x
+
 git pull
-cd Java
+
+cd jetson
 ./gradlew build
+
 
