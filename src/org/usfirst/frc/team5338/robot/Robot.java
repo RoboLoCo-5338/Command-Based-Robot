@@ -36,28 +36,11 @@ public class Robot extends IterativeRobot
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 
-
-//	private final Object imgLock = new Object();
-//
-//	private static ArrayList<Rect> raw;
-//	private static long time, oldTime;
-//
-//	private static Snapshot lastObserved, observed;
-//
-//	private Relay light = new Relay(1);
-//
-//	public static Snapshot outputSnapshot;
-
-
 	private static final Relay jetsonPower = new Relay(0);
-	private static final Relay jetsonReset = new Relay(1);
+	public static final Relay jetsonReset = new Relay(1);
 
 	//NetworkTable table = NetworkTable.getTable("myContourReport");
-
-	//private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
-
-//	VisionThread visionThread;
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -85,7 +68,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
-
 		// Jetson power spark on enable
 		jetsonPower.set(Relay.Value.kOn);
 		Timer.delay(1);

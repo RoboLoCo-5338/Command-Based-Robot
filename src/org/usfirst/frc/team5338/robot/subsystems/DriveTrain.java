@@ -5,9 +5,13 @@ import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team5338.robot.*;
 
@@ -56,10 +60,16 @@ public class DriveTrain extends Subsystem
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.
 	 */
-	public void drive(Joystick joy1)
+	public void drive(Joystick joy)
 	{
-		throttle = (1-(joy1.getRawAxis(2)))/2;
-	    DRIVE.arcadeDrive(throttle * joystickDeadZone(joy1.getRawAxis(1)), -throttle * joystickDeadZone(joy1.getRawAxis(0)), false);
+		if(joy.getRawButton(6) && joy.getRawButton(11))
+		{
+			Robot.jetsonReset.set(Relay.Value.kOn);
+			Timer.delay(1);
+			Robot.jetsonReset.set(Relay.Value.kOff);
+		}
+		throttle = (1-(joy.getRawAxis(2)))/2;
+	    DRIVE.arcadeDrive(throttle * joystickDeadZone(joy.getRawAxis(1)), -throttle * joystickDeadZone(joy.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)
 	{
