@@ -124,6 +124,8 @@ public class Robot extends IterativeRobot
 //		visionThread.start();
 		// instantiate the command used for the autonomous period
 		jetsonPower.set(Relay.Value.kOn);
+		
+		jetsonPower.set(Relay.Value.kOff);
 		autonomousCommand = new Autonomous();
 	}
 
