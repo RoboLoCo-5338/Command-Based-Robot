@@ -16,12 +16,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.first.wpilibj.Relay;
-//import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-//import com.kauailabs.sf2.frc.navXSensor;
-//import com.kauailabs.sf2.orientation.OrientationHistory;
-//import com.kauailabs.sf2.orientation.Quaternion;
-//import com.kauailabs.sf2.time.TimestampedValue;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -31,29 +26,19 @@ import edu.wpi.first.wpilibj.Timer;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot
+{
 	Command autonomousCommand;
-//	private static final int IMG_WIDTH = 1280;
-//	private static final int IMG_HEIGHT = 720;
+	private static final int IMG_WIDTH = 1280;
+	private static final int IMG_HEIGHT = 720;
 
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
-
-//	private final Object imgLock = new Object();
-//
-//	private static ArrayList<Rect> raw;
-//	private static long time, oldTime;
-
-//	private static Snapshot lastObserved, observed;
-//	
-//	public static Snapshot outputSnapshot;
 	
-//	public AHRS ahrs;
-//    OrientationHistory orientation_history;
-//    double last_write_timestamp = 0;
-//    
-//    float delta_yaw, delta_pitch, delta_roll;
-    
+	private static final Relay jetsonPower = new Relay(0);
+	private static final Relay jetsonReset = new Relay(1);
+	
+	NetworkTable table = NetworkTable.getTable("myContourReport");
  
 
 	//private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
@@ -138,6 +123,7 @@ public class Robot extends IterativeRobot {
 //		});
 //		visionThread.start();
 		// instantiate the command used for the autonomous period
+		jetsonPower.set(Relay.Value.kOn);
 		autonomousCommand = new Autonomous();
 	}
 
@@ -174,64 +160,6 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Z",outputSnapshot.width);
 //		SmartDashboard.putString("raw data", rawString);
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
-		//runSF2();
 		Scheduler.getInstance().run();
 	}
-	
-//	public void runSF2() {
-//
-//        if ( oi.getJoystick().getRawButton(1)) {            	
-//        	if ((Timer.getFPGATimestamp() - last_write_timestamp) > 5.0) {
-//        		orientation_history.writeToDirectory("/home/lvuser/sf2");
-//                last_write_timestamp = Timer.getFPGATimestamp();
-//        	}
-//        }            
-//        
-//        /* Acquire Historical Orientation Data */
-//        long navx_timestamp = ahrs.getLastSensorTimestamp();
-//        navx_timestamp -= 1000; /* look 1 second backwards in time */
-//        float historical_yaw = orientation_history.getYawDegreesAtTime(navx_timestamp);
-//        float historical_pitch = orientation_history.getPitchDegreesAtTime(navx_timestamp);
-//        float historical_roll = orientation_history.getRollDegreesAtTime(navx_timestamp);
-//
-//        /* Acquire Current Orientation Data */
-//        float curr_yaw = ahrs.getYaw();
-//        float curr_pitch = ahrs.getPitch();
-//        float curr_roll = ahrs.getRoll();
-//        
-//        /* Calculate orientation change */
-//        delta_yaw = curr_yaw - historical_yaw;
-//        delta_pitch = curr_pitch - historical_pitch;
-//        delta_roll = curr_roll - historical_roll;
-//        
-//        /* Display historical orientation data on Dashboard */
-//        SmartDashboard.putNumber("SF2_Historical_Yaw", historical_yaw);
-//        SmartDashboard.putNumber("SF2_Historical_Pitch", historical_pitch);
-//        SmartDashboard.putNumber("SF2_Historical_Roll", historical_roll);
-//
-//        TimestampedValue<Quaternion> historical_quat = new TimestampedValue<Quaternion>(new Quaternion());
-//        orientation_history.getQuaternionAtTime(navx_timestamp, historical_quat);            
-//        SmartDashboard.putNumber("SF2_Historical_QuaternionW", historical_quat.getValue().getW());
-//        SmartDashboard.putNumber("SF2_Historical_QuaternionX", historical_quat.getValue().getX());
-//        SmartDashboard.putNumber("SF2_Historical_QuaternionY", historical_quat.getValue().getY());
-//        SmartDashboard.putNumber("SF2_Historical_QuaternionZ", historical_quat.getValue().getZ());            
-//        
-//        /* Display whether historical values are interpolated or not. */
-//        SmartDashboard.putBoolean("SF2_Interpolated", historical_quat.getInterpolated());
-//        
-//        /* Display 6-axis Processed Angle & Quaternion Data on Dashboard. */
-//        SmartDashboard.putNumber("IMU_Yaw",		 curr_yaw);
-//        SmartDashboard.putNumber("IMU_Pitch",    curr_pitch);
-//        SmartDashboard.putNumber("IMU_Roll",     curr_roll);
-//        SmartDashboard.putNumber("QuaternionW",  ahrs.getQuaternionW());
-//        SmartDashboard.putNumber("QuaternionX",  ahrs.getQuaternionX());
-//        SmartDashboard.putNumber("QuaternionY",  ahrs.getQuaternionY());
-//        SmartDashboard.putNumber("QuaternionZ",  ahrs.getQuaternionZ());
-//        
-//        SmartDashboard.putNumber("Delta_Yaw",	delta_yaw);
-//        SmartDashboard.putNumber("Delta_Pitch",	delta_pitch);
-//        SmartDashboard.putNumber("Delta_Roll",	delta_roll);
-//
-//	}
-
 }
