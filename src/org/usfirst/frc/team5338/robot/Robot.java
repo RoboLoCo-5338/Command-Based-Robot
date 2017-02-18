@@ -71,6 +71,7 @@ public class Robot extends IterativeRobot
 		jetsonPower.set(Relay.Value.kOn);
 		Timer.delay(1);
 		jetsonPower.set(Relay.Value.kOff);
+		// Jetson power spark on enable
 //		visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 //
 //			oldTime = lastObserved.time;
