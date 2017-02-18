@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot
 	private static final Relay jetsonPower = new Relay(0);
 	private static final Relay jetsonReset = new Relay(1);
 	
-	NetworkTable table = NetworkTable.getTable("myContourReport");
+	//NetworkTable table = NetworkTable.getTable("myContourReport");
  
 
 	//private static final NetworkTable table = NetworkTable.getTable("GRIP/output");
