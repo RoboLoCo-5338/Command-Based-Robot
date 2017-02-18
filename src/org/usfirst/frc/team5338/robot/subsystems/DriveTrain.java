@@ -69,7 +69,7 @@ public class DriveTrain extends Subsystem
 		}
 		else if (value < -0.04)
 		{
-		 return (value + 0.04)/0.94;
+		 return (value + 0.04)/0.96;
 		}
 		return 0.0;
 	}

@@ -148,17 +148,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic()
 	{
-//		String rawString;
-//		synchronized (imgLock) {
-//			outputSnapshot = lastObserved;
-//			rawString = "";
-//			for (Rect i : raw)
-//				rawString = rawString + i.toString() + "    ";
-//		}
-//		SmartDashboard.putNumber("X",outputSnapshot.x);
-//		SmartDashboard.putNumber("Y",outputSnapshot.y);
-//		SmartDashboard.putNumber("Z",outputSnapshot.width);
-//		SmartDashboard.putString("raw data", rawString);
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}
