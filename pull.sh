@@ -4,7 +4,7 @@ set -x
 
 git pull
 
-cd Java
+cd jetson
 ./gradlew build
 
 
