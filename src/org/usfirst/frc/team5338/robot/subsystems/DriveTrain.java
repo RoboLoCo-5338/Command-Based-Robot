@@ -62,11 +62,11 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		if(joy.getRawButton(10) && joy.getRawButton(11))
+		if(joy.getRawButton(8) && joy.getRawButton(9))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOn);
 		}
-		if(!joy.getRawButton(10) && !joy.getRawButton(11))
+		if(!joy.getRawButton(8) && !joy.getRawButton(9))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
