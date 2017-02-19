@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		ConnectionInfo[] foo = NetworkTable.connections();
-		SmartDashboard.putString("Jetson OK", "foo");
+		SmartDashboard.putString("Jetson OK", foo[0].remote_ip);
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}

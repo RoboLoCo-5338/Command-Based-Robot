@@ -67,7 +67,7 @@ public class Main
     Mat inputImage = new Mat();
     Mat hsv = new Mat();
 
-    GripPipeline gp = new GripPipeline();
+    //GripPipeline gp = new GripPipeline();
 
     table = NetworkTable.getTable("datatable");
     // Infinitely process image
@@ -76,32 +76,33 @@ public class Main
       // Grab a frame. If it has a frame time of 0, there was an error.
       // Just skip and continue
       long frameTime = imageSink.grabFrame(inputImage);
-      if (frameTime == 0) continue;
+      if (frameTime == 0)
+    	  continue;
+    }
+      //gp.process(inputImage);
 
-      gp.process(inputImage);
-
-      ArrayList<MatOfPoint> fCO = gp.findContoursOutput();
-
-		ArrayList<Rect> rects = new ArrayList<Rect>();
-		for (MatOfPoint mop : fCO)
-				rects.add(Imgproc.boundingRect(mop));
-
-		//remove duplicates
-		Set<Rect> hs = new HashSet<>();
-		hs.addAll(rects);
-		rects.clear();
-		rects.addAll(hs);
-
-		//remove rectangles that aren't the right size
-		for(int i=0;i<rects.size();i++)
-		{
-			Rect r = rects.get(i);
-			if((Math.abs(2.5 - r.height / (float)r.width)>0.5) && (r.y)> 1 )
-			{
-				rects.remove(i);
-				i--;
-			}
-		}
+//      ArrayList<MatOfPoint> fCO = gp.findContoursOutput();
+//
+//		ArrayList<Rect> rects = new ArrayList<Rect>();
+//		for (MatOfPoint mop : fCO)
+//				rects.add(Imgproc.boundingRect(mop));
+//
+//		//remove duplicates
+//		Set<Rect> hs = new HashSet<>();
+//		hs.addAll(rects);
+//		rects.clear();
+//		rects.addAll(hs);
+//
+//		//remove rectangles that aren't the right size
+//		for(int i=0;i<rects.size();i++)
+//		{
+//			Rect r = rects.get(i);
+//			if((Math.abs(2.5 - r.height / (float)r.width)>0.5) && (r.y)> 1 )
+//			{
+//				rects.remove(i);
+//				i--;
+//			}
+//		}
 //
 //		if (!rects.isEmpty())
 //		{
@@ -192,7 +193,6 @@ public class Main
       // Here is where you would write a processed image that you want to restreams
       // This will most likely be a marked up image of what the camera sees
       // For now, we are just going to stream the HSV image
-      imageSource.putFrame(hsv);
     }
   }
 
