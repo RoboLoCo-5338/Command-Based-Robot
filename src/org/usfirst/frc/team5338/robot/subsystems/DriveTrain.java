@@ -27,7 +27,7 @@ public class DriveTrain extends Subsystem
     private final CANTalon DRIVER2 = new CANTalon(1);
     
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
-	
+
 	private double throttle = 0.5;
 
 	public DriveTrain()
@@ -62,10 +62,12 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		if(joy.getRawButton(6) && joy.getRawButton(11))
+		if(joy.getRawButton(10) && joy.getRawButton(11))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOn);
-			Timer.delay(1);
+		}
+		if(!joy.getRawButton(10) && !joy.getRawButton(11))
+		{
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
 		throttle = (1 - (joy.getRawAxis(2))) / 2;
