@@ -62,9 +62,9 @@ public class Robot extends IterativeRobot
 	public void teleopInit()
 	{
 		// Jetson power spark on enable
-		jetsonPower.set(Relay.Value.kOn);
+		/*jetsonPower.set(Relay.Value.kOn);
 		Timer.delay(1);
-		jetsonPower.set(Relay.Value.kOff);
+		jetsonPower.set(Relay.Value.kOff);*/
 		autonomousCommand.cancel();
 	}
 
