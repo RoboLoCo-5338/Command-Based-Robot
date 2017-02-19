@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-
 import org.opencv.core.*;
 import org.opencv.core.Core.*;
 import org.opencv.features2d.FeatureDetector;
@@ -25,7 +23,8 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline implements VisionPipeline {
+public class GripPipeline 
+{
 
 	//Outputs
 	private Mat blurOutput = new Mat();
@@ -41,7 +40,7 @@ public class GripPipeline implements VisionPipeline {
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	@Override	public void process(Mat source0) {
+	public void process(Mat source0) {
 		// Step Blur0:
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Median Filter");
@@ -105,7 +104,8 @@ public class GripPipeline implements VisionPipeline {
 	 * This method is a generated getter for the output of a CV_Canny.
 	 * @return Mat output from CV_Canny.
 	 */
-	public Mat cvCannyOutput() {
+	public Mat cvCannyOutput()
+{
 		return cvCannyOutput;
 	}
 
@@ -155,7 +155,6 @@ public class GripPipeline implements VisionPipeline {
 			}
 		}
 
-		@Override
 		public String toString() {
 			return this.label;
 		}

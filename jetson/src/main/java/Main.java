@@ -19,8 +19,8 @@ public class Main
 	private static final int IMG_WIDTH = 1280;
 	private static final int IMG_HEIGHT = 720;
 
-	static Snapshot observed, lastObserved;
-	static long time, oldTime;
+//	static Snapshot observed, lastObserved;
+//	static long time, oldTime;
 
   public static void main(String[] args)
   {
