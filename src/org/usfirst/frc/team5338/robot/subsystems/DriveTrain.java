@@ -70,13 +70,13 @@ public class DriveTrain extends Subsystem
 	}
 	public double joystickDeadZone(double value)
 	{
-		if (value > 0.03 || value < -0.03)
+		if (value > 0.02 || value < -0.02)
 		{
-		 return (value - 0.03)/0.97;
+		 return (value - 0.02)/0.98;
 		}
-		else if (value < -0.03)
+		else if (value < -0.02)
 		{
-		 return (value + 0.03)/0.97;
+		 return (value + 0.02)/0.98;
 		}
 		return 0.0;
 	}
