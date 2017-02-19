@@ -174,7 +174,7 @@ public class Main
 					}
 					//observed = new Snapshot(0,0,0,0);*/
 					table.putNumber("r1x", r1.x);
-					table.putNumber("r2x", r2.x)
+					table.putNumber("r2x", r2.x);
 					table.putNumber("r1y", r1.y);
 					table.putNumber("r2y", r2.y);		
 		} 
