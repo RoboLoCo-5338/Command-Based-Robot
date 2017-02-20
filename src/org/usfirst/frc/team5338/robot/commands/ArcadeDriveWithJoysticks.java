@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Have the robot drive tank style using the two Joysticks until interrupted.
  */
-public class TankDriveWithJoysticks extends Command
+public class ArcadeDriveWithJoysticks extends Command
 {
-	public TankDriveWithJoysticks()
+	public ArcadeDriveWithJoysticks()
 	{
 		requires(Robot.drivetrain);
 	}

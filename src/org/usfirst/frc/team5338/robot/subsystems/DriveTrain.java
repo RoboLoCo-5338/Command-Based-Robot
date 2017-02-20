@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.Robot;
-import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
+import org.usfirst.frc.team5338.robot.commands.ArcadeDriveWithJoysticks;
 
 import com.ctre.CANTalon;
 
@@ -36,7 +36,7 @@ public class DriveTrain extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		setDefaultCommand(new TankDriveWithJoysticks());
+		setDefaultCommand(new ArcadeDriveWithJoysticks());
 	}
 	/**
 	 * Arcade style driving for the DriveTrain.
@@ -57,16 +57,16 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(Joystick joy)
 	{
-		if(joy.getRawButton(8) && joy.getRawButton(9))
+		if(joy.getRawButton(7) && joy.getRawButton(8))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOn);
 		}
-		if(!(joy.getRawButton(8) || joy.getRawButton(9)))
+		if(!(joy.getRawButton(7) || joy.getRawButton(8)))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
-		throttle = (1 - (joy.getRawAxis(2))) / 2;
-	    DRIVE.arcadeDrive(throttle * joystickDeadZone(joy.getRawAxis(1)), -throttle * joystickDeadZone(joy.getRawAxis(0)), false);
+		throttle = (1 - (joy.getRawAxis(3))) / 2;
+	    DRIVE.arcadeDrive(throttle * -joystickDeadZone(joy.getRawAxis(1)), throttle * joystickDeadZone(joy.getRawAxis(0)), false);
 	}
 	public double joystickDeadZone(double value)
 	{

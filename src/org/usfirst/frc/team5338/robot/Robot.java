@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot
 	private static final Relay jetsonPower = new Relay(0);
 	public static final Relay jetsonReset = new Relay(1);
 
-	NetworkTable table = NetworkTable.getTable("datatable");
+	//NetworkTable table = NetworkTable.getTable("datatable");
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -62,17 +62,17 @@ public class Robot extends IterativeRobot
 	public void teleopInit()
 	{
 		// Jetson power spark on enable
-		/*jetsonPower.set(Relay.Value.kOn);
+		jetsonPower.set(Relay.Value.kOn);
 		Timer.delay(1);
-		jetsonPower.set(Relay.Value.kOff);*/
+		jetsonPower.set(Relay.Value.kOff);
 		autonomousCommand.cancel();
 	}
 
 	@Override
 	public void teleopPeriodic()
 	{
-		ConnectionInfo[] foo = NetworkTable.connections();
-		SmartDashboard.putString("Jetson OK", foo[0].remote_ip);
+//		ConnectionInfo[] foo = NetworkTable.connections();
+//		SmartDashboard.putString("Jetson OK", foo[0].remote_ip);
 		SmartDashboard.putNumber("Throttle", drivetrain.getThrottle());
 		Scheduler.getInstance().run();
 	}
