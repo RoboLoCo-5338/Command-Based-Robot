@@ -48,7 +48,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double forward, double rotation)
 	{
-		DRIVE.arcadeDrive(throttle * forward, -throttle * rotation, false);
+		DRIVE.arcadeDrive(throttle * forward, -throttle * rotation, true);
 	}
 	/**
 	 * @param joy
@@ -65,7 +65,9 @@ public class DriveTrain extends Subsystem
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
 		throttle = (1 - (joy.getRawAxis(3))) / 2;
-	    DRIVE.arcadeDrive(throttle * -joystickDeadZone(joy.getRawAxis(1)), throttle * -joystickDeadZone(joy.getRawAxis(0)), false);
+		double forward = throttle * -joystickDeadZone(joy.getRawAxis(1));
+		double rotation = 0.75 * throttle * -joystickDeadZone(joy.getRawAxis(0)) + 0.25 * throttle * -joystickDeadZone(joy.getRawAxis(2));
+	    DRIVE.arcadeDrive(forward, rotation, true);
 	}
 	public double joystickDeadZone(double value)
 	{

@@ -28,22 +28,22 @@ public class BallHandler extends Subsystem
     }
     public void handleBalls(Joystick joy)
 	{
-		if(joy.getRawButton(5))
-		{
-			TOP.set(0.99);
-			BOTTOM.set(-0.99);
-			return;
-		}
 		if(joy.getRawButton(3))
 		{
-			TOP.set(-0.99);
-			BOTTOM.set(0.95);
+			TOP.set(-0.75);
+			BOTTOM.set(0.75);
 			return;
 		}
-		if(joy.getRawButton(4))
+		if(joy.getRawButton(5))
 		{
-			TOP.set(0.99);
-			BOTTOM.set(0.99);
+			TOP.set(0.75);
+			BOTTOM.set(-0.75);
+			return;
+		}
+		if(joy.getRawButton(1))
+		{
+			TOP.set(0.75);
+			BOTTOM.set(0.75);
 			return;
 		}
 		TOP.set(0.0);
