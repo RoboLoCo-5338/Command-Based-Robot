@@ -30,19 +30,19 @@ public class BallHandler extends Subsystem
 	{
 		if(joy.getRawButton(5))
 		{
-			TOP.set(0.50);
+			TOP.set(1.0);
 			return;
 		}
 		if(joy.getRawButton(3))
 		{
-			TOP.set(-0.25);
-			BOTTOM.set(0.75);
+			TOP.set(-0.75);
+			BOTTOM.set(1.0);
 			return;
 		}
 		if(joy.getRawButton(4))
 		{
-			TOP.set(0.50);
-			BOTTOM.set(0.50);
+			TOP.set(1.0);
+			BOTTOM.set(1.0);
 			return;
 		}
 		TOP.set(0.0);
