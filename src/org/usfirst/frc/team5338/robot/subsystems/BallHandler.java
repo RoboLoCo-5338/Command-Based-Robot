@@ -1,13 +1,10 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.Robot;
-import org.usfirst.frc.team5338.robot.commands.ArcadeDriveWithJoysticks;
 import org.usfirst.frc.team5338.robot.commands.HandleBalls;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -22,6 +19,8 @@ public class BallHandler extends Subsystem
     public BallHandler()
 	{
 		super();
+		TOP.enable();
+		BOTTOM.enable();
 	}
     public void initDefaultCommand() 
     {
@@ -29,17 +28,30 @@ public class BallHandler extends Subsystem
     }
     public void handleBalls(Joystick joy)
 	{
-		if(joy.getRawButton(7) && joy.getRawButton(8))
+		if(joy.getRawButton(5))
 		{
-			Robot.jetsonReset.set(Relay.Value.kOn);
+			TOP.set(0.50);
+			return;
 		}
-		if(!(joy.getRawButton(7) || joy.getRawButton(8)))
+		if(joy.getRawButton(3))
 		{
-			Robot.jetsonReset.set(Relay.Value.kOff);
+			TOP.set(-0.25);
+			BOTTOM.set(0.75);
+			return;
 		}
+		if(joy.getRawButton(4))
+		{
+			TOP.set(0.50);
+			BOTTOM.set(0.50);
+			return;
+		}
+		TOP.set(0.0);
+		BOTTOM.set(0.0);
 	}
-    public void handleBalls(double top, double bottm)
+    public void handleBalls(double top, double bottom)
 	{
+    	TOP.set(top);
+		BOTTOM.set(bottom);
 	}
 }
 
