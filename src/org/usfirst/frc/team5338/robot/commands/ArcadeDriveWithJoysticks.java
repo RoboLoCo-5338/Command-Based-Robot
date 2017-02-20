@@ -27,7 +27,8 @@ public class ArcadeDriveWithJoysticks extends Command
 	}
 	// Called once after isFinished returns true
 	@Override
-	protected void end() {
+	protected void end()
+	{
 		Robot.drivetrain.drive(0, 0);
 	}
 }

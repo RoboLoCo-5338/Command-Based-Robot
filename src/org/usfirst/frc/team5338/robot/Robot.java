@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5338.robot;
 
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
+import org.usfirst.frc.team5338.robot.subsystems.BallHandler;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.ConnectionInfo;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,14 +25,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot
 {
 	Command autonomousCommand;
-	private static final int IMG_WIDTH = 1280;
-	private static final int IMG_HEIGHT = 720;
+//	private static final int IMG_WIDTH = 1280;
+//	private static final int IMG_HEIGHT = 720;
 
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
+	public static final BallHandler ballhandler = new BallHandler();
 
 	private static final Relay jetsonPower = new Relay(0);
 	public static final Relay jetsonReset = new Relay(1);
+	
 
 	//NetworkTable table = NetworkTable.getTable("datatable");
 	

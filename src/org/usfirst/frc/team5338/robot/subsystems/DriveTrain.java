@@ -48,8 +48,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double forward, double rotation)
 	{
-		throttle = 0.0;
-		DRIVE.tankDrive(throttle * forward, -throttle * rotation, false);
+		DRIVE.arcadeDrive(throttle * forward, -throttle * rotation, false);
 	}
 	/**
 	 * @param joy
@@ -70,13 +69,13 @@ public class DriveTrain extends Subsystem
 	}
 	public double joystickDeadZone(double value)
 	{
-		if (value > 0.02 || value < -0.02)
+		if (value > 0.01 || value < -0.01)
 		{
-		 return (value - 0.02)/0.98;
+		 return (value - 0.01)/0.99;
 		}
-		else if (value < -0.02)
+		else if (value < -0.01)
 		{
-		 return (value + 0.02)/0.98;
+		 return (value + 0.01)/0.99;
 		}
 		return 0.0;
 	}
