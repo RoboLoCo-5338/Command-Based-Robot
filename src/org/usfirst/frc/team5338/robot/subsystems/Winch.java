@@ -25,14 +25,10 @@ public class Winch extends Subsystem
     }
     public void liftRobot(Joystick joy)
 	{
-		if(joy.getRawButton(11))
+		if(joy.getRawButton(1))
 		{
-			LIFT.set(-0.99);
+			LIFT.set(-0.95);
 			return;
-		}
-		if(joy.getRawButton(12))
-		{
-			LIFT.set(0.99);
 		}
 		LIFT.set(0.0);
 	}
