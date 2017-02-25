@@ -13,7 +13,6 @@ import main.java.GripPipeline;
 
 public class Main
 {
-
 	private static NetworkTable table;
 
 	private static final int IMG_WIDTH = 1280;
