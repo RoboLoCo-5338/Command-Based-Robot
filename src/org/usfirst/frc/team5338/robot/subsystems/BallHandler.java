@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class BallHandler extends Subsystem
 {
-
 	private final CANTalon TOP = new CANTalon(6);
     private final CANTalon BOTTOM = new CANTalon(5);
 

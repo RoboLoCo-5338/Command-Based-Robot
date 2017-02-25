@@ -27,12 +27,12 @@ public class Winch extends Subsystem
 	{
 		if(joy.getRawButton(11))
 		{
-			LIFT.set(-1.0);
+			LIFT.set(-0.95);
 			return;
 		}
 		if(joy.getRawButton(12))
 		{
-			LIFT.set(1.0);
+			LIFT.set(0.95);
 		}
 		LIFT.set(0.0);
 	}
