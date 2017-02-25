@@ -20,7 +20,7 @@ public class DriveTrain extends Subsystem
     private final CANTalon DRIVEL2 = new CANTalon(3);
     private final CANTalon DRIVER1 = new CANTalon(2);
     private final CANTalon DRIVER2 = new CANTalon(1);
-    
+	
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 
 	private double throttle = 0.5;

@@ -3,6 +3,7 @@ package org.usfirst.frc.team5338.robot;
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.BallHandler;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5338.robot.subsystems.Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 	public static final BallHandler ballhandler = new BallHandler();
+	public static final Winch winch = new Winch();
 
 	private static final Relay jetsonPower = new Relay(0);
 	public static final Relay jetsonReset = new Relay(1);
