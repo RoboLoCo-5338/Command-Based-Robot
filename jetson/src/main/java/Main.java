@@ -87,7 +87,7 @@ public class Main
       hsv = gp.cvCannyOutput();
       imageSource.putFrame(hsv);
       imageSource2.putFrame(inputImage);
-     fCO = gp.findContoursOutput();
+      fCO = gp.findContoursOutput();
 
 		for (MatOfPoint mop : fCO)
 		{
