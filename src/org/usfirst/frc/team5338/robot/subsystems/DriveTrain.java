@@ -66,7 +66,8 @@ public class DriveTrain extends Subsystem
 		}
 		throttle = (1 - (joy.getRawAxis(3))) / 2;
 		double forward = throttle * -joystickDeadZone(joy.getRawAxis(1));
-		double rotation = 0.75 * throttle * -joystickDeadZone(joy.getRawAxis(0)) + 0.25 * throttle * -joystickDeadZone(joy.getRawAxis(2));
+		double rotation = 2 * throttle * -joystickDeadZone(joy.getRawAxis(0)) / 3
+				+ throttle * -joystickDeadZone(joy.getRawAxis(2)) / 3;
 	    DRIVE.arcadeDrive(forward, rotation, true);
 	}
 	public double joystickDeadZone(double value)
