@@ -50,6 +50,9 @@ public class DriveTrain extends Subsystem
 	{
 		DRIVE.arcadeDrive(throttle * forward, -throttle * rotation, true);
 	}
+	public void tank(double left, double right){
+		DRIVE.drive(left, right);
+	}
 	/**
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.
