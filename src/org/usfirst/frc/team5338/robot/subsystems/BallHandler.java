@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.HandleBalls;
 
 import com.ctre.CANTalon;
@@ -25,9 +26,9 @@ public class BallHandler extends Subsystem
     {
     	setDefaultCommand(new HandleBalls());
     }
-    public void handleBalls(Joystick joy)
+    public void handleBalls(OI oi)
 	{
-    	switch(ballState)
+    	switch(oi.ballState)
     	{
     	case "Lower Intake":
 		if(joy.getRawButton(3))

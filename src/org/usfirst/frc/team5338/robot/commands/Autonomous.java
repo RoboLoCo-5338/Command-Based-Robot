@@ -55,9 +55,11 @@ public class Autonomous extends CommandGroup
 	    public void changeTalonModeToPosition(CANTalon talon)
 	    {
 	    	talon.changeControlMode(TalonControlMode.Position);
+	    	//TODO
 	    }
 	    public void changeTalonModeToVoltage(CANTalon talon)
 	    {
 	    	talon.changeControlMode(TalonControlMode.PercentVbus);
+	    	//TODO
 	    }
 	}
