@@ -51,7 +51,7 @@ public class DriveTrain extends Subsystem
 	 */
 	public void drive(double left, double right)
 	{
-		DRIVE.tankDrive(throttle * left, -throttle * right, false);
+		DRIVE.tankDrive(throttle * -left, -throttle * right, false);
 	}
 	public void tank(double left, double right){
 		DRIVE.drive(left, right);
@@ -82,7 +82,7 @@ public class DriveTrain extends Subsystem
 		}
 		if(joyR.getRawButton(1))
 		{
-			drive(-joystickDeadZone(joyL.getRawAxis(1)), -joystickDeadZone(joyL.getRawAxis(1)));
+			drive(-joystickDeadZone(joyR.getRawAxis(1)), joystickDeadZone(joyR.getRawAxis(1)));
 		}
 		else
 		{
