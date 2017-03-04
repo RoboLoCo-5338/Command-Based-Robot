@@ -19,10 +19,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem
 {
-	private final CANTalon DRIVEL1 = new CANTalon(4);
-    private final CANTalon DRIVEL2 = new CANTalon(3);
-    private final CANTalon DRIVER1 = new CANTalon(2);
-    private final CANTalon DRIVER2 = new CANTalon(1);
+	public final CANTalon DRIVEL1 = new CANTalon(4);
+    public final CANTalon DRIVEL2 = new CANTalon(3);
+    public final CANTalon DRIVER1 = new CANTalon(2);
+    public final CANTalon DRIVER2 = new CANTalon(1);
 	
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 
@@ -53,7 +53,8 @@ public class DriveTrain extends Subsystem
 	{
 		DRIVE.tankDrive(throttle * -left, -throttle * right, false);
 	}
-	public void tank(double left, double right){
+	public void tank(double left, double right)
+	{
 		DRIVE.drive(left, right);
 	}
 	/**
@@ -89,6 +90,7 @@ public class DriveTrain extends Subsystem
 	    DRIVE.tankDrive(throttle * -joystickDeadZone(joyL.getRawAxis(1)), throttle * -joystickDeadZone(joyR.getRawAxis(1)), false);
 		}
 	}
+	
 	private double joystickDeadZone(double value)
 	{
 		if (value > 0.05 || value < -0.05)
@@ -101,6 +103,7 @@ public class DriveTrain extends Subsystem
 		}
 		return 0.0;
 	}
+	
 	public double getThrottle()
 	{
 		return throttle;

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.commands.LiftRobot;
 
 import com.ctre.CANTalon;
@@ -23,9 +24,10 @@ public class Winch extends Subsystem
     {
     	setDefaultCommand(new LiftRobot());
     }
-    public void liftRobot(Joystick joy)
+    public void liftRobot(OI oi)
 	{
-		if(joy.getRawButton(1))
+		Joystick joyR = oi.getJoystick(1);
+		if(joyR.getRawButton(4))
 		{
 			LIFT.set(-0.95);
 			return;

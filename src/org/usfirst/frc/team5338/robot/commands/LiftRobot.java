@@ -17,7 +17,7 @@ public class LiftRobot extends Command
  	@Override
  	protected void execute()
  	{
- 		Robot.winch.liftRobot(Robot.oi.getJoystick(0));
+ 		Robot.winch.liftRobot(Robot.oi);
  	}
  	// Make this return true when this Command no longer needs to run execute()
  	@Override
