@@ -82,7 +82,7 @@ public class DriveTrain extends Subsystem
 		}
 		if(joyR.getRawButton(1))
 		{
-			drive(-joystickDeadZone(joyR.getRawAxis(1)), joystickDeadZone(joyR.getRawAxis(1)));
+			drive(joystickDeadZone(joyR.getRawAxis(1)), joystickDeadZone(joyR.getRawAxis(1)));
 		}
 		else
 		{
@@ -91,13 +91,13 @@ public class DriveTrain extends Subsystem
 	}
 	private double joystickDeadZone(double value)
 	{
-		if (value > 0.025 || value < -0.025)
+		if (value > 0.05 || value < -0.05)
 		{
-		 return (value - 0.025)/0.975;
+		 return (value - 0.05)/0.95;
 		}
-		else if (value < -0.025)
+		else if (value < -0.05)
 		{
-		 return (value + 0.025)/0.975;
+		 return (value + 0.05)/0.95;
 		}
 		return 0.0;
 	}

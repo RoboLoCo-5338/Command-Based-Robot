@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot
 	Command autonomousCommand;
 //	private static final int IMG_WIDTH = 1280;
 //	private static final int IMG_HEIGHT = 720;
-
+	
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
 	public static final BallHandler ballhandler = new BallHandler();
@@ -51,12 +51,12 @@ public class Robot extends IterativeRobot
 		autonomousCommand = new Autonomous();
 		SmartDashboard.putString("Placement =", "");
 	}
-
+	
 	@Override
 	public void autonomousInit() {
 		autonomousCommand.start(); // schedule the autonomous command (example)
 	}
-
+	
 	/**
 	 * This function is called periodically during autonomous
 	 */
@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+	
 	@Override
 	public void teleopInit()
 	{
