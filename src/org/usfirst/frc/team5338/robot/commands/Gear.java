@@ -12,7 +12,7 @@ public class Gear extends Command {
 	double timefordist = 0;
 	public Gear(){
 		requires(Robot.drivetrain);
-		requires(Robot.table);
+		//requires(Robot.table);
 		setTimeout(12);
 	}
 	
@@ -20,7 +20,7 @@ public class Gear extends Command {
 	}
 	
 	protected double angle(){
-		return Math.atan(Robot.table.getValue("x")/1108.5) * (180/Math.PI);
+		return     0;//     Math.atan(Robot.table.getValue("x")/1108.5) * (180/Math.PI);
 	}
 	
 	protected void execute(){
@@ -31,10 +31,10 @@ public class Gear extends Command {
 		while(angle() < -5){
 			Robot.drivetrain.tank(0.5, -0.5);
 		}
-		while(Robot.table.getValue("width") != null){
-			Robot.drivetrain.tank(0.5, 0.5);
-			Timer.delay(.5);
-		}
+//		while(Robot.table.getValue("width") != null){
+//			Robot.drivetrain.tank(0.5, 0.5);
+//			Timer.delay(.5);
+//		}
 		Robot.drivetrain.tank(-0.5, -0.5);
 		Timer.delay(2);
 		end();
