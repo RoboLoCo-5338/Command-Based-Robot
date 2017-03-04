@@ -17,7 +17,7 @@ public class ArcadeDriveWithJoysticks extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.drive(Robot.oi.getJoystick());
+		Robot.drivetrain.drive(Robot.oi);
 	}
 	// Make this return true when this Command no longer needs to run execute()
 	@Override

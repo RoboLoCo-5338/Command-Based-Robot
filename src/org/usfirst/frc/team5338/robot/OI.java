@@ -7,12 +7,17 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	private final Joystick joy = new Joystick(0);
+	private final Joystick joy0 = new Joystick(0);
+	private final Joystick joy1 = new Joystick(1);
 	public OI()
 	{
 	}
 	public Joystick getJoystick()
 	{
-		return joy;
+		return joy0;
+	}
+	public Joystick getJoystick(int n)
+	{
+		return n==0 ? joy0 : n==1? joy1 : joy0;
 	}
 }
