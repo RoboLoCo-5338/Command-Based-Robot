@@ -28,32 +28,24 @@ public class BallHandler extends Subsystem
     }
     public void handleBalls(OI oi)
 	{
+    	
     	switch(oi.ballState)
     	{
     	case "Lower Intake":
-		if(joy.getRawButton(3))
-		{
 			TOP.set(-0.50);
 			BOTTOM.set(0.75);
-			return;
-		}
+			break;
 		case "Upper Intake":
-		if(joy.getRawButton(5))
-		{
 			TOP.set(0.75);
 			BOTTOM.set(-0.75);
-			return;
-		}
+			break;
 		case "Outake":
-		if(joy.getRawButton(2))
-		{
 			TOP.set(0.75);
 			BOTTOM.set(0.75);
-			return;
-		}
+			break;
 		default:
-		TOP.set(0.0);
-		BOTTOM.set(0.0);
+			TOP.set(0.0);
+			BOTTOM.set(0.0);
     	}
 	}
     public void handleBalls(double top, double bottom)

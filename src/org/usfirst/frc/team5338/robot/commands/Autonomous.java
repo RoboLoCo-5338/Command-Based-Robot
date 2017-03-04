@@ -23,13 +23,13 @@ public class Autonomous extends CommandGroup
 	double fdist2 = 0;
 	public Autonomous() {
 		//Maybe implement a switch to allow multiple placements of robot
-		switch(placement)
+		/*switch(placement)
 		{
 			case "left":
-				addSequential(new MoveF(fdist));
-				addSequential(new MoveB(bdist));
-				addSequential(new TurnL(theta));
-				addSequential(new MoveF(fdist2));
+				addSequential(new Move(fdist));
+				addSequential(new Move(bdist));
+				addSequential(new Turn(theta));
+				addSequential(new Move(fdist2));
 				addSequential(new Gear());
 				break;
 			case "center":
@@ -50,7 +50,7 @@ public class Autonomous extends CommandGroup
 				break;
 			default:
 				break;
-		}
+		}*/
 	}
 	    public void changeTalonModeToPosition(CANTalon talon)
 	    {
