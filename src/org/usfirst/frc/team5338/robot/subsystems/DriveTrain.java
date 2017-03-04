@@ -84,7 +84,10 @@ public class DriveTrain extends Subsystem
 		{
 			drive(-joystickDeadZone(joyL.getRawAxis(1)), -joystickDeadZone(joyL.getRawAxis(1)));
 		}
+		else
+		{
 	    DRIVE.tankDrive(throttle * -joystickDeadZone(joyL.getRawAxis(1)), throttle * -joystickDeadZone(joyR.getRawAxis(1)), false);
+		}
 	}
 	private double joystickDeadZone(double value)
 	{
