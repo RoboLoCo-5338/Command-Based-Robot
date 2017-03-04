@@ -16,7 +16,7 @@ public class HandleBalls extends Command
  	@Override
  	protected void execute()
  	{
- 		Robot.ballhandler.handleBalls(Robot.oi.getJoystick());
+ 		Robot.ballhandler.handleBalls(Robot.oi.getJoystick(0));
  	}
  	// Make this return true when this Command no longer needs to run execute()
  	@Override

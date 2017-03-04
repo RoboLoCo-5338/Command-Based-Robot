@@ -12,12 +12,11 @@ public class OI {
 	public OI()
 	{
 	}
-	public Joystick getJoystick()
-	{
-		return joy0;
-	}
 	public Joystick getJoystick(int n)
 	{
-		return n==0 ? joy0 : n==1? joy1 : joy0;
+		if(n == 0)
+			return joy0;
+		else
+			return joy1;
 	}
 }
