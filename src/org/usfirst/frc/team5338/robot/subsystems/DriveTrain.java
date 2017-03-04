@@ -53,23 +53,23 @@ public class DriveTrain extends Subsystem
 	{
 		DRIVE.arcadeDrive(throttle * forward, -throttle * rotation, true);
 	}
-//	public void tank(double left, double right){
-//		DRIVE.drive(left, right);
-//	}
+	public void tank(double left, double right){
+		DRIVE.drive(left, right);
+	}
 	/**
 	 * @param joy
 	 *            The XBOX style joystick to use to drive arcade style.
 	 */
 	public void drive(OI oi)
 	{
-		Joystick joy = oi.getJoystick(0);
-		Joystick joyL = joy;
+		Joystick joyL = oi.getJoystick(0);
 		Joystick joyR = oi.getJoystick(1);
-		if(joy.getRawButton(7) && joy.getRawButton(8))
+		Joystick joy = joyR;
+		if(joy.getRawButton(7) && joy.getRawButton(2))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOn);
 		}
-		if(!(joy.getRawButton(7) || joy.getRawButton(8)))
+		else
 		{
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
