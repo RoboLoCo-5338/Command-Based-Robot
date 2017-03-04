@@ -26,7 +26,7 @@ public class DriveTrain extends Subsystem
 	
 	public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
 
-	private double throttle = 0.5;
+	private double throttle = 1.0;
 
 	public DriveTrain()
 	{
@@ -49,9 +49,9 @@ public class DriveTrain extends Subsystem
 	 * @param right
 	 *            Speed in range [-1,1]
 	 */
-	public void drive(double forward, double rotation)
+	public void drive(double left, double right)
 	{
-		DRIVE.arcadeDrive(throttle * forward, -throttle * rotation, false);
+		DRIVE.tankDrive(throttle * left, -throttle * right, false);
 	}
 	public void tank(double left, double right){
 		DRIVE.drive(left, right);
@@ -72,21 +72,29 @@ public class DriveTrain extends Subsystem
 		{
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
-		throttle = (1 - (joyR.getRawAxis(2))) / 2;
-//		double forward = throttle * -joystickDeadZone(joy.getRawAxis(1));
-//		double rotation = 2 * throttle * -joystickDeadZone(joy.getRawAxis(0)) / 3
-//				+ throttle * -joystickDeadZone(joy.getRawAxis(2)) / 3;
-	    DRIVE.tankDrive(-joystickDeadZone(throttle * joyL.getRawAxis(1)), -joystickDeadZone(throttle * joyR.getRawAxis(1)), false);
+		if(joyL.getRawButton(1))
+		{
+			throttle = 0.5;
+		}
+		else
+		{
+			throttle = 1.0;
+		}
+		if(joyR.getRawButton(1))
+		{
+			drive(-joystickDeadZone(joyL.getRawAxis(1)), -joystickDeadZone(joyL.getRawAxis(1)));
+		}
+	    DRIVE.tankDrive(throttle * -joystickDeadZone(joyL.getRawAxis(1)), throttle * -joystickDeadZone(joyR.getRawAxis(1)), false);
 	}
 	private double joystickDeadZone(double value)
 	{
-		if (value > 0.01 || value < -0.01)
+		if (value > 0.025 || value < -0.025)
 		{
-		 return (value - 0.01)/0.99;
+		 return (value - 0.025)/0.975;
 		}
-		else if (value < -0.01)
+		else if (value < -0.025)
 		{
-		 return (value + 0.01)/0.99;
+		 return (value + 0.025)/0.975;
 		}
 		return 0.0;
 	}
