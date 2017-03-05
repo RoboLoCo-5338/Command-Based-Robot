@@ -63,7 +63,7 @@ public class DriveTrain extends Subsystem
 	{
 		Joystick joyL = oi.getJoystick(0);
 		Joystick joyR = oi.getJoystick(1);
-		if(joyR.getRawButton(7) && joyR.getRawButton(2))
+		if(oi.get(JETSONRESET))
 		{
 			Robot.jetsonReset.set(Relay.Value.kOn);
 		}
@@ -71,7 +71,7 @@ public class DriveTrain extends Subsystem
 		{
 			Robot.jetsonReset.set(Relay.Value.kOff);
 		}
-		if(joyL.getRawButton(1))
+		if(oi.get(SLOW))
 		{
 			throttle = 0.5;
 		}
@@ -79,13 +79,13 @@ public class DriveTrain extends Subsystem
 		{
 			throttle = 1.0;
 		}
-		if(joyR.getRawButton(1))
+		if(oi.get(STRAIGHT))
 		{
-			drive(joystickDeadZone(joyR.getRawAxis(1)), joystickDeadZone(joyR.getRawAxis(1)));
+			drive(oi.getRight(), oi.getRight());
 		}
 		else
 		{
-	    DRIVE.tankDrive(throttle * -joystickDeadZone(joyL.getRawAxis(1)), throttle * -joystickDeadZone(joyR.getRawAxis(1)), false);
+	    DRIVE.tankDrive(throttle * -oi.getLeft(), throttle * -oi.getRight(), false);
 		}
 	}
 	
