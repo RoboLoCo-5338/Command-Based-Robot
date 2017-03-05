@@ -1,10 +1,8 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.Robot;
-
-import org.usfirst.frc.team5338.robot.commands.ArcadeDriveWithJoysticks;
-
 import org.usfirst.frc.team5338.robot.OI;
+import org.usfirst.frc.team5338.robot.Robot;
+import org.usfirst.frc.team5338.robot.commands.ArcadeDriveWithJoysticks;
 
 import com.ctre.CANTalon;
 

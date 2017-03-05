@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5338.robot.commands;
 
 import org.usfirst.frc.team5338.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -16,7 +17,7 @@ public class HandleBalls extends Command
  	@Override
  	protected void execute()
  	{
- 		Robot.ballhandler.handleBalls(Robot.oi.getJoystick(0));
+ 		Robot.ballhandler.handleBalls(Robot.oi);
  	}
  	// Make this return true when this Command no longer needs to run execute()
  	@Override

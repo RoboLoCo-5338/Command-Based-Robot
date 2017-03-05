@@ -1,10 +1,9 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.team5338.robot.Robot;
-import java.lang.Math;
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class Gear extends Command {
 	

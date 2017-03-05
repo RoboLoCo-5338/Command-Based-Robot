@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5338.robot.commands;
 
 import org.usfirst.frc.team5338.robot.Robot;
-import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,7 +17,7 @@ public class Move extends Command {
     // Called just before this Command runs the first time
     protected void initialize()
     {
-    	\Robot.drivetrain.DRIVEL1
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run

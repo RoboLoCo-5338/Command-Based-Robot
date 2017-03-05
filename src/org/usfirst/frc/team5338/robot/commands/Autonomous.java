@@ -1,12 +1,9 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
