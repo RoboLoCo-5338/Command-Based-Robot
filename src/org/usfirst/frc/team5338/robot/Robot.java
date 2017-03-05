@@ -3,6 +3,7 @@ package org.usfirst.frc.team5338.robot;
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.BallHandler;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5338.robot.subsystems.GearHandler;
 import org.usfirst.frc.team5338.robot.subsystems.Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot
 	public static final OI oi = new OI();
 	public static final BallHandler ballhandler = new BallHandler();
 	public static final Winch winch = new Winch();
+	public static final GearHandler gearhandler = new GearHandler();
 
 	private static final Relay jetsonPower = new Relay(0);
 	public static final Relay jetsonReset = new Relay(1);
@@ -66,7 +68,7 @@ public class Robot extends IterativeRobot
 	{
 		// Jetson power spark on enable
 		jetsonPower.set(Relay.Value.kOn);
-		Timer.delay(1);
+		Timer.delay(0.5);
 		jetsonPower.set(Relay.Value.kOff);
 		autonomousCommand.cancel();
 	}
