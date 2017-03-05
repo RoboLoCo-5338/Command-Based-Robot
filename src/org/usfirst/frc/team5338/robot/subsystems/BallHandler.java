@@ -30,15 +30,15 @@ public class BallHandler extends Subsystem
     	
     	switch(oi.ballState)
     	{
-    	case "Lower Intake":
+    	case LOWER:
 			TOP.set(-0.50);
 			BOTTOM.set(0.75);
 			break;
-		case "Upper Intake":
+		case UPPER:
 			TOP.set(0.75);
 			BOTTOM.set(-0.75);
 			break;
-		case "Outake":
+		case OUT:
 			TOP.set(0.75);
 			BOTTOM.set(0.75);
 			break;
