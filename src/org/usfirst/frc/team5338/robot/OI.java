@@ -9,15 +9,18 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
 	private final Joystick joy0 = new Joystick(0);
 	private final Joystick joy1 = new Joystick(1);
-	public String ballState = "";
+	public String ballState;
 	public OI()
 	{
+		ballState = "";
 	}
 	public Joystick getJoystick(int n)
 	{
 		if(n == 0)
 			return joy0;
-		else
+		else if(n == 1)
 			return joy1;
+		else
+			return null;
 	}
 }
